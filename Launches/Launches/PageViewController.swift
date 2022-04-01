@@ -8,7 +8,7 @@
 import UIKit
 
 class PageViewController: UIPageViewController {
-
+    
     // MARK: - Properties
     
     private var pages = [UIViewController]()
@@ -29,7 +29,7 @@ class PageViewController: UIPageViewController {
     init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,9 +52,12 @@ class PageViewController: UIPageViewController {
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
         
         // create an array of viewController
-        let page1 = ViewController1()
-        let page2 = ViewController2()
-        let page3 = ViewController3()
+        let page1 = RocketViewController(titleText: "Rocket 1",
+                                             subtitleText: "Good rocket")
+        let page2 = RocketViewController(titleText: "Rocket 2",
+                                             subtitleText: "Not so good")
+        let page3 = RocketViewController(titleText: "Musk",
+                                             subtitleText: "Maybe he's a genius")
         
         pages.append(page1)
         pages.append(page2)
@@ -106,7 +109,7 @@ extension PageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
-
+        
         if currentIndex < pages.count - 1 {
             return pages[currentIndex + 1]  // go next
         } else {
