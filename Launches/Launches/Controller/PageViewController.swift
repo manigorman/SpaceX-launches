@@ -16,7 +16,7 @@ class PageViewController: UIPageViewController {
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.currentPageIndicatorTintColor = .label
         pageControl.pageIndicatorTintColor = .systemGray2
         
         return pageControl
@@ -38,13 +38,19 @@ class PageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .purple
         setupViews()
         setConstraints()
         setDelegate()
     }
     
-    // MARK: - Methods
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        present(SettingsViewController(), animated: true, completion: nil)
+    }
+    
+    // MARK: - Setup
     
     func setupViews() {
         
@@ -80,18 +86,19 @@ class PageViewController: UIPageViewController {
         NSLayoutConstraint.activate([
             pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20),
-            view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 1),
+//            view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 1),
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     // MARK: - Selectors
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
-        setViewControllers([pages[sender.currentPage]], direction: .forward, animated: true, completion: nil)
+        setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
     }
 }
 
-// MARK: - DataSources
+// MARK: - Extensions
 
 extension PageViewController: UIPageViewControllerDataSource {
     
@@ -100,7 +107,8 @@ extension PageViewController: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
         
         if currentIndex == 0 {
-            return pages.last               // wrap to last
+//            return pages.last               // wrap to last
+            return nil
         } else {
             return pages[currentIndex - 1]  // go previous
         }
@@ -113,12 +121,11 @@ extension PageViewController: UIPageViewControllerDataSource {
         if currentIndex < pages.count - 1 {
             return pages[currentIndex + 1]  // go next
         } else {
-            return pages.first              // wrap to first
+//            return pages.first              // wrap to first
+            return nil
         }
     }
 }
-
-// MARK: - Delegates
 
 extension PageViewController: UIPageViewControllerDelegate {
     
@@ -128,28 +135,5 @@ extension PageViewController: UIPageViewControllerDelegate {
         guard let currentIndex = pages.firstIndex(of: viewControllers[0]) else { return }
         
         pageControl.currentPage = currentIndex
-    }
-}
-
-// MARK: - ViewControllers
-
-class ViewController1: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemRed
-    }
-}
-
-class ViewController2: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-    }
-}
-
-class ViewController3: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
     }
 }
