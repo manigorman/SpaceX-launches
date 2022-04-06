@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PageViewController: UIPageViewController {
+class PageVC: UIPageViewController {
     
     // MARK: - Properties
     
@@ -38,7 +38,7 @@ class PageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
+        
         setupViews()
         setConstraints()
         setDelegate()
@@ -46,23 +46,23 @@ class PageViewController: UIPageViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        present(SettingsViewController(), animated: true, completion: nil)
     }
     
     // MARK: - Setup
     
     func setupViews() {
         
+        view.backgroundColor = .purple
+        
         view.addSubview(pageControl)
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
         
-        // create an array of viewController
-        let page1 = RocketViewController(titleText: "Rocket 1",
+        /// create an array of viewController
+        let page1 = RocketVC(titleText: "Rocket 1",
                                              subtitleText: "Good rocket")
-        let page2 = RocketViewController(titleText: "Rocket 2",
+        let page2 = RocketVC(titleText: "Rocket 2",
                                              subtitleText: "Not so good")
-        let page3 = RocketViewController(titleText: "Musk",
+        let page3 = RocketVC(titleText: "Musk",
                                              subtitleText: "Maybe he's a genius")
         
         pages.append(page1)
@@ -100,7 +100,7 @@ class PageViewController: UIPageViewController {
 
 // MARK: - Extensions
 
-extension PageViewController: UIPageViewControllerDataSource {
+extension PageVC: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
@@ -127,7 +127,7 @@ extension PageViewController: UIPageViewControllerDataSource {
     }
 }
 
-extension PageViewController: UIPageViewControllerDelegate {
+extension PageVC: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         

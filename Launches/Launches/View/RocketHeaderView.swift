@@ -7,13 +7,12 @@
 
 import UIKit
 
-class HeroHeaderView: UIView {
+class RocketHeaderView: UIView {
 
     public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-//        imageView.image = UIImage(named: "heroImage")
         imageView.backgroundColor = .systemPink
         
         return imageView
@@ -36,11 +35,6 @@ class HeroHeaderView: UIView {
         super.init(coder: coder)
         fatalError()
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        imageView.frame = bounds
-//    }
     
     private func createViews() {
         addSubview(containerView)
