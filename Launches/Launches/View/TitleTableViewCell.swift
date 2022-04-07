@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol SettingButtonPressedDelegate: AnyObject {
+    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell)
+}
+
 class TitleTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
     static let identifier = "TitleTableViewCell"
+    
+    weak var delegate: SettingButtonPressedDelegate?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -24,8 +30,9 @@ class TitleTableViewCell: UITableViewCell {
     
     private let settingButton: UIButton = {
         let button = UIButton()
+        button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(TitleTableViewCell.self, action: #selector(settingButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(settingButtonPressed), for: .touchUpInside)
         
         return button
     }()
@@ -52,9 +59,10 @@ class TitleTableViewCell: UITableViewCell {
             titleLabel.heightAnchor.constraint(equalToConstant: 32),
 //            titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            settingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 20),
+            settingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             settingButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            settingButton.heightAnchor.constraint(equalToConstant: 28)
+            settingButton.heightAnchor.constraint(equalToConstant: 28),
+            settingButton.widthAnchor.constraint(equalToConstant: 28)
 //            settingButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }
@@ -65,6 +73,12 @@ class TitleTableViewCell: UITableViewCell {
     }
     
     @objc private func settingButtonPressed() {
-//        present(SettingsVC(), animated: true, completion: nil)
+        self.delegate?.SettingButtonPressed(self)
+    }
+}
+
+extension TitleTableViewCell: SettingButtonPressedDelegate {
+    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell) {
+        
     }
 }

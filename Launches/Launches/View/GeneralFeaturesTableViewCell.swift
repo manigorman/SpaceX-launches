@@ -43,10 +43,6 @@ class GeneralFeaturesTableViewCell: UITableViewCell {
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Страна"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Стоимость груза"))
         
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "7 февраля, 2018"))
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "США"))
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "$90 млн"))
-        
         contentView.addSubview(featuresStack)
         contentView.addSubview(valuesStack)
         
@@ -94,6 +90,8 @@ class GeneralFeaturesTableViewCell: UITableViewCell {
     }
     
     public func configure(with model: GeneralFeaturesSection) {
-        
+        valuesStack.addArrangedSubview(createFeatureLabel(with: model.firstFlightLabel))
+        valuesStack.addArrangedSubview(createFeatureLabel(with: model.countryLabel))
+        valuesStack.addArrangedSubview(createFeatureLabel(with: String(model.costPerLaunchLabel)))
     }
 }

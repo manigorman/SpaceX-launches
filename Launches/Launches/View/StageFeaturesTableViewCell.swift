@@ -8,7 +8,7 @@
 import UIKit
 
 class StageFeaturesTableViewCell: UITableViewCell {
-
+    
     // MARK: - Properties
     
     static let identifier = "StageFeaturesTableViewCell"
@@ -43,10 +43,6 @@ class StageFeaturesTableViewCell: UITableViewCell {
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Количество топлива"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Время сгорания"))
         
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "27"))
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "308.6"))
-        valuesStack.addArrangedSubview(createFeatureLabel(with: "593 sec"))
-        
         contentView.addSubview(featuresStack)
         contentView.addSubview(valuesStack)
         
@@ -78,22 +74,25 @@ class StageFeaturesTableViewCell: UITableViewCell {
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-//            featuresStack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            //            featuresStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             featuresStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             featuresStack.topAnchor.constraint(equalTo: topAnchor),
             featuresStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             featuresStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
             valuesStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-//            valuesStack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            //            valuesStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             valuesStack.topAnchor.constraint(equalTo: topAnchor),
             valuesStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             valuesStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }
     
+    
     public func configure(with model: StageFeaturesSection) {
-        
+        valuesStack.addArrangedSubview(createFeatureLabel(with: model.engines))
+        valuesStack.addArrangedSubview(createFeatureLabel(with: model.fuel_amount_tons))
+        valuesStack.addArrangedSubview(createFeatureLabel(with: model.burn_time_sec))
     }
-
+    
 }

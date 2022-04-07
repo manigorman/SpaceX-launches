@@ -160,6 +160,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: model)
+            cell.delegate = self
             
             return cell
         case .featuresSection(let model):
@@ -205,5 +206,11 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
         default:
             return 96
         }
+    }
+}
+
+extension RocketVC: SettingButtonPressedDelegate {
+    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell) {
+        present(SettingsVC(), animated: true, completion: nil)
     }
 }
