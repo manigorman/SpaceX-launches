@@ -7,6 +7,8 @@
 
 import UIKit
 
+var allRockets: [Rocket] = []
+
 class PageVC: UIPageViewController {
     
     // MARK: - Properties
@@ -36,16 +38,27 @@ class PageVC: UIPageViewController {
     
     // MARK: - Life Cycle
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        APICaller.shared.getRockets { [weak self] result in
+            switch result {
+            case .success(let rockets):
+                allRockets = rockets
+                DispatchQueue.main.async {
+                    self?.configurePages()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
         setupViews()
         setConstraints()
         setDelegate()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     // MARK: - Setup
@@ -56,23 +69,6 @@ class PageVC: UIPageViewController {
         
         view.addSubview(pageControl)
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
-        
-        /// create an array of viewController
-        let page1 = RocketVC(titleText: "Rocket 1",
-                                             subtitleText: "Good rocket")
-        let page2 = RocketVC(titleText: "Rocket 2",
-                                             subtitleText: "Not so good")
-        let page3 = RocketVC(titleText: "Musk",
-                                             subtitleText: "Maybe he's a genius")
-        
-        pages.append(page1)
-        pages.append(page2)
-        pages.append(page3)
-        
-        pageControl.numberOfPages = pages.count
-        pageControl.currentPage = initialPage
-        
-        setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
     }
     
     private func setDelegate() {
@@ -95,6 +91,21 @@ class PageVC: UIPageViewController {
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
+    }
+    
+    private func configurePages() {
+        /// create an array of viewController
+        for rocket in allRockets {
+            let page = RocketVC()
+            page.configure(with: rocket)
+            pages.append(page)
+            
+        }
+        
+        pageControl.numberOfPages = pages.count
+        pageControl.currentPage = initialPage
+        
+        setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
     }
 }
 

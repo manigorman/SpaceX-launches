@@ -15,7 +15,7 @@ class TitleTableViewCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Falcon Heavy"
+        label.text = ""
         label.font = .systemFont(ofSize: 24, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -24,7 +24,6 @@ class TitleTableViewCell: UITableViewCell {
     
     private let settingButton: UIButton = {
         let button = UIButton()
-        button.setTitle("✸", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(TitleTableViewCell.self, action: #selector(settingButtonPressed), for: .touchUpInside)
         
@@ -49,15 +48,20 @@ class TitleTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.heightAnchor.constraint(equalToConstant: 32),
-            titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
+//            titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            settingButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            settingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 20),
             settingButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            settingButton.heightAnchor.constraint(equalToConstant: 28),
-            settingButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
+            settingButton.heightAnchor.constraint(equalToConstant: 28)
+//            settingButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
+    }
+    
+    public func configure(with model: TitleSection) {
+        self.titleLabel.text = model.titleLabel
+        self.settingButton.setImage(model.icon, for: .normal)
     }
     
     @objc private func settingButtonPressed() {

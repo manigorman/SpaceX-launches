@@ -12,7 +12,6 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.text = "229.6"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -21,7 +20,7 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     private let dimensionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Высота, ft"
+        label.textColor = UIColor(named: "SecondColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -70,6 +69,11 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
             stack.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             stack.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+    
+    public func configure(with model: Feature) {
+        self.valueLabel.text = model.value
+        self.dimensionLabel.text = model.title
     }
     
     

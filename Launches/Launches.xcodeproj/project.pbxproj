@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C53BB47927F7592300B7998C /* RocketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53BB47827F7592300B7998C /* RocketVC.swift */; };
 		C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559201027F82DA200AD2D3B /* RocketHeaderView.swift */; };
+		C57482C827FEDB050026E23D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482C727FEDB050026E23D /* APICaller.swift */; };
+		C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482CA27FEDBE40026E23D /* Rocket.swift */; };
 		C58A447727FE336D00F07777 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A447627FE336D00F07777 /* TitleTableViewCell.swift */; };
 		C58FE96627FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */; };
 		C58FE96827FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */; };
@@ -26,6 +28,8 @@
 /* Begin PBXFileReference section */
 		C53BB47827F7592300B7998C /* RocketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketVC.swift; sourceTree = "<group>"; };
 		C559201027F82DA200AD2D3B /* RocketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketHeaderView.swift; sourceTree = "<group>"; };
+		C57482C727FEDB050026E23D /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		C57482CA27FEDBE40026E23D /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
 		C58A447627FE336D00F07777 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralFeaturesTableViewCell.swift; sourceTree = "<group>"; };
 		C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageFeaturesTableViewCell.swift; sourceTree = "<group>"; };
@@ -53,6 +57,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C57482C927FEDBD50026E23D /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				C57482C727FEDB050026E23D /* APICaller.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		C57482CC27FEDC160026E23D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C57482CA27FEDBE40026E23D /* Rocket.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C592AD6327F43FBE00AC96D2 = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +94,8 @@
 			children = (
 				C592AD6F27F43FBE00AC96D2 /* AppDelegate.swift */,
 				C592AD7127F43FBE00AC96D2 /* SceneDelegate.swift */,
+				C57482CC27FEDC160026E23D /* Model */,
+				C57482C927FEDBD50026E23D /* Manager */,
 				C5CDB22427F8AC1900A741AA /* Controller */,
 				C5CDB22527F8AC2600A741AA /* View */,
 				C592AD7827F43FBF00AC96D2 /* Assets.xcassets */,
@@ -179,10 +201,12 @@
 			files = (
 				C58A447727FE336D00F07777 /* TitleTableViewCell.swift in Sources */,
 				C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */,
+				C57482C827FEDB050026E23D /* APICaller.swift in Sources */,
 				C53BB47927F7592300B7998C /* RocketVC.swift in Sources */,
 				C58FE96627FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift in Sources */,
 				C592AD7427F43FBE00AC96D2 /* PageVC.swift in Sources */,
 				C5CDB22B27F8D71B00A741AA /* FeaturesCollectionViewCell.swift in Sources */,
+				C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */,
 				C592AD7027F43FBE00AC96D2 /* AppDelegate.swift in Sources */,
 				C5D46D7727F834DF0050C8E7 /* SettingsTableViewCell.swift in Sources */,
 				C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */,

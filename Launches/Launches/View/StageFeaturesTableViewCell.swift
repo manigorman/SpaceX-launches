@@ -79,17 +79,21 @@ class StageFeaturesTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
 //            featuresStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            featuresStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            featuresStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             featuresStack.topAnchor.constraint(equalTo: topAnchor),
             featuresStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             featuresStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            valuesStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            valuesStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 //            valuesStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             valuesStack.topAnchor.constraint(equalTo: topAnchor),
             valuesStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             valuesStack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
+    }
+    
+    public func configure(with model: StageFeaturesSection) {
+        
     }
 
 }
