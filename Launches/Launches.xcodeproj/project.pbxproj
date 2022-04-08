@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */; };
 		C53BB47927F7592300B7998C /* RocketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53BB47827F7592300B7998C /* RocketVC.swift */; };
 		C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559201027F82DA200AD2D3B /* RocketHeaderView.swift */; };
 		C57482C827FEDB050026E23D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482C727FEDB050026E23D /* APICaller.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeLaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		C53BB47827F7592300B7998C /* RocketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketVC.swift; sourceTree = "<group>"; };
 		C559201027F82DA200AD2D3B /* RocketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketHeaderView.swift; sourceTree = "<group>"; };
 		C57482C727FEDB050026E23D /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				C5CDB22A27F8D71B00A741AA /* FeaturesCollectionViewCell.swift */,
 				C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */,
 				C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */,
+				C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */,
 				C5D46D7627F834DF0050C8E7 /* SettingsTableViewCell.swift */,
 			);
 			path = View;
@@ -212,6 +215,7 @@
 				C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */,
 				C5CDB22727F8D5B700A741AA /* FeaturesTableViewCell.swift in Sources */,
 				C58FE96827FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift in Sources */,
+				C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */,
 				C5D46D7527F8325B0050C8E7 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

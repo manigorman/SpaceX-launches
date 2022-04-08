@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SettingButtonPressedDelegate: AnyObject {
-    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell)
+    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell)
 }
 
 class TitleTableViewCell: UITableViewCell {
@@ -73,12 +73,12 @@ class TitleTableViewCell: UITableViewCell {
     }
     
     @objc private func settingButtonPressed() {
-        self.delegate?.SettingButtonPressed(self)
+        self.delegate?.settingButtonUsage(self)
     }
 }
 
 extension TitleTableViewCell: SettingButtonPressedDelegate {
-    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell) {
+    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell) {
         
     }
 }

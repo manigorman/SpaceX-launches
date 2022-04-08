@@ -19,6 +19,10 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "Настройки"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Закрыть", style: .done, target: self, action: #selector(handleDone))
+        
         view.addSubview(tableView)
         setConstraints()
         tableView.delegate = self
@@ -33,6 +37,10 @@ class SettingsVC: UIViewController {
             tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
             tableView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
+    }
+    
+    @objc private func handleDone() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -54,9 +62,9 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        100
-//    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        100
+    //    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         40

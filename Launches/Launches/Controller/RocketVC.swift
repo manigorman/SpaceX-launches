@@ -12,6 +12,7 @@ enum SectionType {
     case featuresSection(model: FeaturesSection)
     case generalFeaturesSection(model: GeneralFeaturesSection)
     case stageFeaturesSection(model: StageFeaturesSection, header: String)
+    case seeLaunchesSection
 }
 
 struct TitleSection {
@@ -60,6 +61,7 @@ class RocketVC: UIViewController {
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         table.register(GeneralFeaturesTableViewCell.self, forCellReuseIdentifier: GeneralFeaturesTableViewCell.identifier)
         table.register(StageFeaturesTableViewCell.self, forCellReuseIdentifier: StageFeaturesTableViewCell.identifier)
+        table.register(SeeLaunchesTableViewCell.self, forCellReuseIdentifier: SeeLaunchesTableViewCell.identifier)
         
         return table
     }()
@@ -82,8 +84,8 @@ class RocketVC: UIViewController {
         
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
         
+        headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
         tableView.tableHeaderView = headerView
         
         headerView?.imageView.image = UIImage(named: "image")
@@ -92,10 +94,10 @@ class RocketVC: UIViewController {
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -119,7 +121,8 @@ class RocketVC: UIViewController {
                                                                                      fuel_amount_tons: String(rocket.first_stage.fuel_amount_tons ?? 0), burn_time_sec: String(rocket.first_stage.burn_time_sec ?? 0)), header: "ПЕРВАЯ СТУПЕНЬ"),
                                    .stageFeaturesSection(model: StageFeaturesSection(engines: String(rocket.second_stage.engines ?? 0),
                                                                                      fuel_amount_tons: String(rocket.second_stage.fuel_amount_tons ?? 0),
-                                                                                     burn_time_sec: String(rocket.second_stage.burn_time_sec ?? 0)), header: "ВТОРАЯ СТУПЕНЬ")
+                                                                                     burn_time_sec: String(rocket.second_stage.burn_time_sec ?? 0)), header: "ВТОРАЯ СТУПЕНЬ"),
+                                   .seeLaunchesSection
                                   ])
     }
     
@@ -140,13 +143,11 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch models[section] {
             case .stageFeaturesSection(_, let header):
-            let label = UILabel()
-            label.font = .systemFont(ofSize: 16, weight: .bold)
-            label.text = header
-//            label.textAlignment = .center
-//            label.backgroundColor = .yellow
-
-            return label
+                let label = UILabel()
+                label.font = .systemFont(ofSize: 16, weight: .bold)
+                label.text = header
+            label.backgroundColor = .link
+                return label
             default: return nil
         }
     }
@@ -184,6 +185,13 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             cell.configure(with: model)
             
             return cell
+        case .seeLaunchesSection:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SeeLaunchesTableViewCell.identifier, for: indexPath) as? SeeLaunchesTableViewCell else {
+                return UITableViewCell()
+            }
+//            cell.delegate = self
+            
+            return cell
         }
     }
     
@@ -203,6 +211,8 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             return 96
         case 2:
             return 96
+        case 5:
+            return 56
         default:
             return 96
         }
@@ -210,7 +220,16 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension RocketVC: SettingButtonPressedDelegate {
-    func SettingButtonPressed(_ titleTableViewCell: TitleTableViewCell) {
-        present(SettingsVC(), animated: true, completion: nil)
+    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell) {
+//        present(SettingsVC(), animated: true, completion: nil)
+        let vc = SettingsVC()
+        self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
+}
+
+extension RocketVC: SeeLaunchesButtonPressedDelegate {
+    func seeLaunchesButtonUsage(_ seeLaunchesTableViewCell: SeeLaunchesTableViewCell) {
+        let vc = SettingsVC()
+        self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }

@@ -82,7 +82,6 @@ class PageVC: UIPageViewController {
         NSLayoutConstraint.activate([
             pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20),
-//            view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 1),
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -97,6 +96,8 @@ class PageVC: UIPageViewController {
         /// create an array of viewController
         for rocket in allRockets {
             let page = RocketVC()
+//            let navVC = UINavigationController(rootViewController: page)
+//            navVC.isNavigationBarHidden = true
             page.configure(with: rocket)
             pages.append(page)
             
