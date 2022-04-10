@@ -8,7 +8,7 @@
 import UIKit
 
 class RocketHeaderView: UIView {
-
+    
     public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -67,6 +67,17 @@ class RocketHeaderView: UIView {
         containerView.clipsToBounds = offsetY <= 0
         imageViewBottom.constant = offsetY >= 0 ? 0 : -offsetY / 2
         imageViewHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
+    }
+    
+    public func configure(with link: String) {
+        guard let url = URL(string: link) else {return}
+        
+        DispatchQueue.global().async {
+            guard let data = try? Data(contentsOf: url) else {return}
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data)
+            }
+        }
     }
     
 }

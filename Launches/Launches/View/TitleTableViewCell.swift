@@ -58,13 +58,12 @@ class TitleTableViewCell: UITableViewCell {
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.heightAnchor.constraint(equalToConstant: 32),
-//            titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
+
             
             settingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             settingButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             settingButton.heightAnchor.constraint(equalToConstant: 32),
             settingButton.widthAnchor.constraint(equalToConstant: 32)
-//            settingButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }
     

@@ -51,6 +51,8 @@ class RocketVC: UIViewController {
     
     private var models = [SectionType]()
     
+    public var headerLink = ""
+    
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         
@@ -75,7 +77,6 @@ class RocketVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
         setConstraints()
         setDelegate()
@@ -87,11 +88,9 @@ class RocketVC: UIViewController {
         
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        
         headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
         tableView.tableHeaderView = headerView
-        
-        headerView?.imageView.image = UIImage(named: "image")
+        self.headerView?.configure(with: headerLink)
     }
     
     private func setConstraints() {

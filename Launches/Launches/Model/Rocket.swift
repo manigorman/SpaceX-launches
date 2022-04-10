@@ -22,6 +22,8 @@ struct Rocket: Codable {
     
     let first_stage: Stage
     let second_stage: Stage
+    
+    let flickr_images: [String]
 }
 
 struct Height: Codable {

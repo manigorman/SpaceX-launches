@@ -98,6 +98,7 @@ class PageVC: UIPageViewController {
             let page = RocketVC()
 //            let navVC = UINavigationController(rootViewController: page)
 //            navVC.isNavigationBarHidden = true
+            page.headerLink = rocket.flickr_images.randomElement() ?? ""
             page.configure(with: rocket)
             pages.append(page)
             
