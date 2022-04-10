@@ -16,6 +16,7 @@ class SettingsVC: UIViewController {
         table.separatorStyle = UITableViewCell.SeparatorStyle.none
         table.isScrollEnabled = false
         table.showsVerticalScrollIndicator = false
+//        table.backgroundColor = UIColor(named: "Background")
         table.translatesAutoresizingMaskIntoConstraints = false
         
         return table
@@ -26,27 +27,28 @@ class SettingsVC: UIViewController {
         
         navigationItem.title = "Настройки"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Закрыть", style: .done, target: self, action: #selector(handleDone))
-        
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         setConstraints()
         tableView.delegate = self
         tableView.dataSource = self
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "LabelHighEmphasis")]
+        
     }
     
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            tableView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
     @objc private func handleDone() {
         self.dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
@@ -67,13 +69,13 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        100
-    //    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         40
     }
+    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        40
+//    }
     
     
 }

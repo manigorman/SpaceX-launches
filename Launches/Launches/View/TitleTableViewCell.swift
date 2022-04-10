@@ -7,23 +7,18 @@
 
 import UIKit
 
-protocol SettingButtonPressedDelegate: AnyObject {
-    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell)
-}
-
 class TitleTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
     static let identifier = "TitleTableViewCell"
     
-    weak var delegate: SettingButtonPressedDelegate?
-    
     var settingButtonAction: (() -> ())?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.textColor = UIColor(named: "LabelHighEmphasis")
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -32,7 +27,7 @@ class TitleTableViewCell: UITableViewCell {
     
     private let settingButton: UIButton = {
         let button = UIButton()
-        button.tintColor = .label
+        button.tintColor = UIColor(named: "LabelHighEmphasis")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
@@ -46,6 +41,7 @@ class TitleTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleLabel)
         contentView.addSubview(settingButton)
+        contentView.backgroundColor = UIColor(named: "Background")
         
         setConstraints()
     }
@@ -77,11 +73,5 @@ class TitleTableViewCell: UITableViewCell {
     @objc private func settingButtonPressed() {
 //        self.delegate?.settingButtonUsage(self)
         settingButtonAction?()
-    }
-}
-
-extension TitleTableViewCell: SettingButtonPressedDelegate {
-    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell) {
-        
     }
 }

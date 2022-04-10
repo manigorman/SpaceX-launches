@@ -13,7 +13,8 @@ class RocketHeaderView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .systemPink
+        imageView.backgroundColor = UIColor(named: "Card")
+        imageView.layer.opacity = 0.87
         
         return imageView
     }()

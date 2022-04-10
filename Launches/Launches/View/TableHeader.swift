@@ -14,7 +14,8 @@ class TableHeader: UITableViewHeaderFooterView {
     private let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.text = "Custom Header"
+        label.text = ""
+        label.textColor = UIColor(named: "LabelHighEmphasis")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label

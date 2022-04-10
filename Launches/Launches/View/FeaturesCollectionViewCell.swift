@@ -12,6 +12,7 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
+        label.textColor = UIColor(named: "LabelMediumEmphasis")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -20,7 +21,7 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     private let dimensionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = UIColor(named: "SecondColor")
+        label.textColor = UIColor(named: "LabelLowEmphasis")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -46,7 +47,7 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
         stack.addArrangedSubview(valueLabel)
         stack.addArrangedSubview(dimensionLabel)
         contentView.addSubview(stack)
-        contentView.backgroundColor = UIColor(named: "ItemBackground")
+        contentView.backgroundColor = UIColor(named: "Card")
         setConstraints()
         
         contentView.layer.cornerRadius = 32

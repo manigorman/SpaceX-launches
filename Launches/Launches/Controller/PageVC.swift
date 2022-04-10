@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Network
 
 var allRockets: [Rocket] = []
 
@@ -45,17 +46,16 @@ class PageVC: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        APICaller.shared.getRockets { [weak self] result in
-            switch result {
-            case .success(let rockets):
-                allRockets = rockets
-                DispatchQueue.main.async {
-                    self?.configurePages()
-                }
-            case .failure(let error):
-                print(error)
-            }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
+        
+        if NetworkMonitor.shared.isConnected {
+            fetchRocket()
         }
+        else {
+            self.performAlert()
+        }
+    
         setupViews()
         setConstraints()
         setDelegate()
@@ -65,7 +65,7 @@ class PageVC: UIPageViewController {
     
     func setupViews() {
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "Background")
         
         view.addSubview(pageControl)
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
@@ -88,8 +88,34 @@ class PageVC: UIPageViewController {
     
     // MARK: - Selectors
     
+    @objc func showOfflineDeviceUI(_ notification: Notification) {
+       if NetworkMonitor.shared.isConnected {
+           print("Появилась")
+           fetchRocket()
+       } else {
+           print("Пропала")
+       }
+    }
+    
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
+    }
+    
+    private func fetchRocket() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            APICaller.shared.getRockets { [weak self] result in
+                switch result {
+                case .success(let rockets):
+                    allRockets = rockets
+                    DispatchQueue.main.async {
+                        self?.configurePages()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            print("Downloaded")
+        }
     }
     
     private func configurePages() {
@@ -101,13 +127,18 @@ class PageVC: UIPageViewController {
             page.headerLink = rocket.flickr_images.randomElement() ?? ""
             page.configure(with: rocket)
             pages.append(page)
-            
         }
         
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = initialPage
         
         setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
+    }
+    
+    func performAlert() {
+        let alert = UIAlertController(title: "Warning", message: "Network Data is Turned Off", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

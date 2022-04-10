@@ -24,6 +24,8 @@
 		C5CDB22B27F8D71B00A741AA /* FeaturesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CDB22A27F8D71B00A741AA /* FeaturesCollectionViewCell.swift */; };
 		C5D46D7527F8325B0050C8E7 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D46D7427F8325B0050C8E7 /* SettingsVC.swift */; };
 		C5D46D7727F834DF0050C8E7 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D46D7627F834DF0050C8E7 /* SettingsTableViewCell.swift */; };
+		C5FBB9A728034CDE00853832 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FBB9A628034CDE00853832 /* UserSettings.swift */; };
+		C5FBB9AA2803763A00853832 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FBB9A92803763A00853832 /* NetworkMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		C5CDB22A27F8D71B00A741AA /* FeaturesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesCollectionViewCell.swift; sourceTree = "<group>"; };
 		C5D46D7427F8325B0050C8E7 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		C5D46D7627F834DF0050C8E7 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		C5FBB9A628034CDE00853832 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		C5FBB9A92803763A00853832 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				C57482C727FEDB050026E23D /* APICaller.swift */,
+				C5FBB9A92803763A00853832 /* NetworkMonitor.swift */,
+				C5FBB9A628034CDE00853832 /* UserSettings.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -210,11 +216,13 @@
 				C592AD7427F43FBE00AC96D2 /* PageVC.swift in Sources */,
 				C5CDB22B27F8D71B00A741AA /* FeaturesCollectionViewCell.swift in Sources */,
 				C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */,
+				C5FBB9AA2803763A00853832 /* NetworkMonitor.swift in Sources */,
 				C592AD7027F43FBE00AC96D2 /* AppDelegate.swift in Sources */,
 				C5D46D7727F834DF0050C8E7 /* SettingsTableViewCell.swift in Sources */,
 				C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */,
 				C5CDB22727F8D5B700A741AA /* FeaturesTableViewCell.swift in Sources */,
 				C5AC44DF2802DA1900D67BFD /* TableHeader.swift in Sources */,
+				C5FBB9A728034CDE00853832 /* UserSettings.swift in Sources */,
 				C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */,
 				C5D46D7527F8325B0050C8E7 /* SettingsVC.swift in Sources */,
 			);

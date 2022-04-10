@@ -16,7 +16,7 @@ class UniversalTableViewCell: UITableViewCell {
     private let leftLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor(named: "ThirdColor")
+        label.textColor = UIColor(named: "LabelHighEmphasis")
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -26,6 +26,7 @@ class UniversalTableViewCell: UITableViewCell {
     private let rightLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.textColor = UIColor(named: "LabelMediumEmphasis")
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -37,6 +38,7 @@ class UniversalTableViewCell: UITableViewCell {
 
         contentView.addSubview(leftLabel)
         contentView.addSubview(rightLabel)
+        contentView.backgroundColor = UIColor(named: "Background")
         setConstraints()
     }
 

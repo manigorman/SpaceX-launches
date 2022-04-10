@@ -16,7 +16,7 @@ class SettingsTableViewCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor(named: "ThirdColor")
+        label.textColor = UIColor(named: "LabelHighEmphasis")
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -26,6 +26,7 @@ class SettingsTableViewCell: UITableViewCell {
     private var segmentedControl: UISegmentedControl = {
         let segment = UISegmentedControl()
         segment.translatesAutoresizingMaskIntoConstraints = false
+        segment.addTarget(self, action: #selector(changeUnit(_:)), for: .valueChanged)
         
         return segment
     }()
@@ -35,6 +36,7 @@ class SettingsTableViewCell: UITableViewCell {
 
         contentView.addSubview(label)
         contentView.addSubview(segmentedControl)
+//        contentView.backgroundColor = UIColor(named: "Background")
         
         setConstraints()
     }
@@ -68,6 +70,13 @@ class SettingsTableViewCell: UITableViewCell {
             segmentedControl.heightAnchor.constraint(equalToConstant: 32),
             segmentedControl.widthAnchor.constraint(equalToConstant: 100)
         ])
+    }
+    
+    @objc func changeUnit(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+                print(0)
+        }
+        else {print(1)}
     }
 
 }

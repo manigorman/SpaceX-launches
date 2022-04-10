@@ -7,15 +7,6 @@
 
 import UIKit
 
-extension UIView {
-   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        layer.mask = mask
-    }
-}
-
 enum SectionType {
     case titleSection(model: TitleSection)
     case featuresSection(model: FeaturesSection)
@@ -58,7 +49,7 @@ class RocketVC: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.showsVerticalScrollIndicator = false
         table.contentInset.bottom = UIApplication.shared.windows.first!.safeAreaInsets.bottom
-        
+        table.backgroundColor = UIColor(named: "Background")
         table.register(FeaturesTableViewCell.self, forCellReuseIdentifier: FeaturesTableViewCell.identifier)
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: TableHeader.identifier)
@@ -83,7 +74,7 @@ class RocketVC: UIViewController {
     
     private func setupViews() {
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "Background")
         view.addSubview(tableView)
         
         headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
@@ -179,11 +170,18 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: model)
-//            cell.delegate = self
+
             cell.settingButtonAction = { [unowned self] in
-            
+                
                 let vc = SettingsVC()
-                self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .pageSheet
+                if let sheet = nav.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                }
+                self.present(nav, animated: true, completion: nil)
+
+//                self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
                 
 //                let alert = UIAlertController(title: "Subscribed!", message: "Subscribed to ", preferredStyle: .alert)
 //                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -215,12 +213,12 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             }
             let currentRow = indexPath.row
             cell.configure(leftText: model[currentRow].title, rightText: model[currentRow].value)
+            
             return cell
         case .seeLaunchesSection:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SeeLaunchesTableViewCell.identifier, for: indexPath) as? SeeLaunchesTableViewCell else {
                 return UITableViewCell()
             }
-            //            cell.delegate = self
             
             return cell
         }
@@ -252,21 +250,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
         case 5:
             return 56
         default:
-            return 32
+            return 40
         }
-    }
-}
-
-extension RocketVC: SettingButtonPressedDelegate {
-    func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell) {
-        let vc = SettingsVC()
-        self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
-    }
-}
-
-extension RocketVC: SeeLaunchesButtonPressedDelegate {
-    func seeLaunchesButtonUsage(_ seeLaunchesTableViewCell: SeeLaunchesTableViewCell) {
-        let vc = SettingsVC()
-        self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }

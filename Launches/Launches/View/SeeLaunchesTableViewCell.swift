@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol SeeLaunchesButtonPressedDelegate: AnyObject {
-    func seeLaunchesButtonUsage(_ seeLaunchesTableViewCell: SeeLaunchesTableViewCell)
-}
-
 class SeeLaunchesTableViewCell: UITableViewCell {
 
     static let identifier = "SeeLaunchesTableViewCell"
@@ -19,10 +15,10 @@ class SeeLaunchesTableViewCell: UITableViewCell {
     
     private let seeLaunchesButton: UIButton = {
         let button = UIButton()
-        button.tintColor = .white
         button.setTitle("Посмотреть запуски", for: .normal)
+        button.setTitleColor(UIColor(named: "LabelHighEmphasis"), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        button.backgroundColor = UIColor(named: "ItemBackground")
+        button.backgroundColor = UIColor(named: "Card")
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(seeLaunchesButtonPressed), for: .touchUpInside)
@@ -34,6 +30,7 @@ class SeeLaunchesTableViewCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(seeLaunchesButton)
+        contentView.backgroundColor = UIColor(named: "Background")
         setConstraints()
     }
     
@@ -56,13 +53,6 @@ class SeeLaunchesTableViewCell: UITableViewCell {
 //    }
     
     @objc private func seeLaunchesButtonPressed() {
-        self.delegate?.seeLaunchesButtonUsage(self)
-    }
-}
-
-extension SeeLaunchesTableViewCell: SeeLaunchesButtonPressedDelegate {
-    func seeLaunchesButtonUsage(_ seeLaunchesTableViewCell: SeeLaunchesTableViewCell) {
         
     }
-
 }
