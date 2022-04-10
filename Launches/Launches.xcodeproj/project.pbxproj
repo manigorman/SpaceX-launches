@@ -13,8 +13,6 @@
 		C57482C827FEDB050026E23D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482C727FEDB050026E23D /* APICaller.swift */; };
 		C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482CA27FEDBE40026E23D /* Rocket.swift */; };
 		C58A447727FE336D00F07777 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A447627FE336D00F07777 /* TitleTableViewCell.swift */; };
-		C58FE96627FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */; };
-		C58FE96827FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */; };
 		C592AD7027F43FBE00AC96D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592AD6F27F43FBE00AC96D2 /* AppDelegate.swift */; };
 		C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592AD7127F43FBE00AC96D2 /* SceneDelegate.swift */; };
 		C592AD7427F43FBE00AC96D2 /* PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592AD7327F43FBE00AC96D2 /* PageVC.swift */; };
@@ -35,8 +33,6 @@
 		C57482C727FEDB050026E23D /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		C57482CA27FEDBE40026E23D /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
 		C58A447627FE336D00F07777 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
-		C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralFeaturesTableViewCell.swift; sourceTree = "<group>"; };
-		C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageFeaturesTableViewCell.swift; sourceTree = "<group>"; };
 		C592AD6C27F43FBE00AC96D2 /* Launches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Launches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C592AD6F27F43FBE00AC96D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C592AD7127F43FBE00AC96D2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,9 +124,7 @@
 				C58A447627FE336D00F07777 /* TitleTableViewCell.swift */,
 				C5CDB22627F8D5B700A741AA /* FeaturesTableViewCell.swift */,
 				C5CDB22A27F8D71B00A741AA /* FeaturesCollectionViewCell.swift */,
-				C58FE96527FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift */,
 				C5AC44DE2802DA1900D67BFD /* TableHeader.swift */,
-				C58FE96727FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift */,
 				C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */,
 				C5AC44E02802F0B900D67BFD /* UniversalTableViewCell.swift */,
 				C5D46D7627F834DF0050C8E7 /* SettingsTableViewCell.swift */,
@@ -213,7 +207,6 @@
 				C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */,
 				C57482C827FEDB050026E23D /* APICaller.swift in Sources */,
 				C53BB47927F7592300B7998C /* RocketVC.swift in Sources */,
-				C58FE96627FE39DC007DBBF8 /* GeneralFeaturesTableViewCell.swift in Sources */,
 				C592AD7427F43FBE00AC96D2 /* PageVC.swift in Sources */,
 				C5CDB22B27F8D71B00A741AA /* FeaturesCollectionViewCell.swift in Sources */,
 				C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */,
@@ -221,7 +214,6 @@
 				C5D46D7727F834DF0050C8E7 /* SettingsTableViewCell.swift in Sources */,
 				C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */,
 				C5CDB22727F8D5B700A741AA /* FeaturesTableViewCell.swift in Sources */,
-				C58FE96827FE3EDC007DBBF8 /* StageFeaturesTableViewCell.swift in Sources */,
 				C5AC44DF2802DA1900D67BFD /* TableHeader.swift in Sources */,
 				C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */,
 				C5D46D7527F8325B0050C8E7 /* SettingsVC.swift in Sources */,

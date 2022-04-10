@@ -7,6 +7,15 @@
 
 import UIKit
 
+extension UIView {
+   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+    }
+}
+
 enum SectionType {
     case titleSection(model: TitleSection)
     case featuresSection(model: FeaturesSection)
@@ -27,18 +36,6 @@ struct FeaturesSection {
     let massLabel: String
     let weightLabel: String
 }
-//
-//struct GeneralFeaturesSection {
-//    let firstFlightLabel: String
-//    let countryLabel: String
-//    let costPerLaunchLabel: Double
-//}
-
-//struct StageFeaturesSection {
-//    let engines: String
-//    let fuel_amount_tons: String
-//    let burn_time_sec: String
-//}
 
 struct Feature {
     let title: String
@@ -60,12 +57,11 @@ class RocketVC: UIViewController {
         table.separatorStyle = UITableViewCell.SeparatorStyle.none
         table.translatesAutoresizingMaskIntoConstraints = false
         table.showsVerticalScrollIndicator = false
+        table.contentInset.bottom = UIApplication.shared.windows.first!.safeAreaInsets.bottom
         
         table.register(FeaturesTableViewCell.self, forCellReuseIdentifier: FeaturesTableViewCell.identifier)
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
-        //        table.register(GeneralFeaturesTableViewCell.self, forCellReuseIdentifier: GeneralFeaturesTableViewCell.identifier)
         table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: TableHeader.identifier)
-        //        table.register(StageFeaturesTableViewCell.self, forCellReuseIdentifier: StageFeaturesTableViewCell.identifier)
         table.register(SeeLaunchesTableViewCell.self, forCellReuseIdentifier: SeeLaunchesTableViewCell.identifier)
         table.register(UniversalTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.identifier)
         
@@ -89,6 +85,7 @@ class RocketVC: UIViewController {
         
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
+        
         headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
         tableView.tableHeaderView = headerView
         self.headerView?.configure(with: headerLink)
@@ -110,24 +107,6 @@ class RocketVC: UIViewController {
     }
     
     func configure(with rocket: Rocket) {
-        //        models.append(contentsOf: [.titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
-        //            return
-        //        })),
-        //                                   .featuresSection(model: FeaturesSection(heightLabel: String(rocket.height.meters),
-        //                                                                           diameterLabel: String(rocket.diameter.meters),
-        //                                                                           massLabel: String(rocket.mass.kg),
-        //                                                                           weightLabel: String(rocket.payload_weights[0].kg))),
-        //                                   .generalFeaturesSection(model: GeneralFeaturesSection(firstFlightLabel: rocket.first_flight,
-        //                                                                                         countryLabel: rocket.country,
-        //                                                                                         costPerLaunchLabel: rocket.cost_per_launch)),
-        //                                   .stageFeaturesSection(model: StageFeaturesSection(engines: String(rocket.first_stage.engines ?? 0),
-        //                                                                                     fuel_amount_tons: String(rocket.first_stage.fuel_amount_tons ?? 0), burn_time_sec: String(rocket.first_stage.burn_time_sec ?? 0)), header: "ПЕРВАЯ СТУПЕНЬ"),
-        //                                   .stageFeaturesSection(model: StageFeaturesSection(engines: String(rocket.second_stage.engines ?? 0),
-        //                                                                                     fuel_amount_tons: String(rocket.second_stage.fuel_amount_tons ?? 0),
-        //                                                                                     burn_time_sec: String(rocket.second_stage.burn_time_sec ?? 0)), header: "ВТОРАЯ СТУПЕНЬ"),
-        //                                   .seeLaunchesSection
-        //                                  ])
-        
         models.append(contentsOf: [
             .titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
                 return
@@ -136,16 +115,11 @@ class RocketVC: UIViewController {
                                                     diameterLabel: String(rocket.diameter.meters),
                                                     massLabel: String(rocket.mass.kg),
                                                     weightLabel: String(rocket.payload_weights[0].kg))),
-            //            .featuresSection(model: [
-            //                Feature(title: "Первый запуск", value: rocket.first_flight),
-            //                Feature(title: "Страна", value: rocket.country),
-            //                Feature(title: "Стоимость груза", value: String(rocket.cost_per_launch))
-            //            ]),
-                .generalFeaturesSection(model: [
-                    Feature(title: "Первый запуск", value: rocket.first_flight),
-                    Feature(title: "Страна", value: rocket.country),
-                    Feature(title: "Стоимость груза", value: String(rocket.cost_per_launch))
-                ]),
+            .generalFeaturesSection(model: [
+                Feature(title: "Первый запуск", value: rocket.first_flight),
+                Feature(title: "Страна", value: rocket.country),
+                Feature(title: "Стоимость груза", value: String(rocket.cost_per_launch))
+            ]),
             .stageFeaturesSection(model: [
                 Feature(title: "Количество двигателей", value: String(rocket.first_stage.engines ?? 0)),
                 Feature(title: "Количество топлива", value: String(rocket.first_stage.fuel_amount_tons ?? 0)),
@@ -156,6 +130,7 @@ class RocketVC: UIViewController {
                 Feature(title: "Количество топлива", value: String(rocket.second_stage.fuel_amount_tons ?? 0)),
                 Feature(title: "Время сгорания", value: String(rocket.first_stage.burn_time_sec ?? 0))
             ], header: "ВТОРАЯ СТУПЕНЬ"),
+            .seeLaunchesSection
         ])
     }
 }
@@ -204,7 +179,18 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: model)
-            cell.delegate = self
+//            cell.delegate = self
+            cell.settingButtonAction = { [unowned self] in
+            
+                let vc = SettingsVC()
+                self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+                
+//                let alert = UIAlertController(title: "Subscribed!", message: "Subscribed to ", preferredStyle: .alert)
+//                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                alert.addAction(okAction)
+//
+//                self.present(alert, animated: true, completion: nil)
+            }
             
             return cell
         case .featuresSection(let model):
@@ -251,7 +237,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 3, 4:
-            return 60
+            return 32
         default:
             return 0
         }
@@ -263,6 +249,8 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             return 32
         case 1:
             return 96
+        case 5:
+            return 56
         default:
             return 32
         }

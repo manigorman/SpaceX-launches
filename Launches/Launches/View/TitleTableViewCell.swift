@@ -19,6 +19,8 @@ class TitleTableViewCell: UITableViewCell {
     
     weak var delegate: SettingButtonPressedDelegate?
     
+    var settingButtonAction: (() -> ())?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
@@ -30,7 +32,7 @@ class TitleTableViewCell: UITableViewCell {
     
     private let settingButton: UIButton = {
         let button = UIButton()
-        button.tintColor = .white
+        button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
@@ -73,7 +75,8 @@ class TitleTableViewCell: UITableViewCell {
     }
     
     @objc private func settingButtonPressed() {
-        self.delegate?.settingButtonUsage(self)
+//        self.delegate?.settingButtonUsage(self)
+        settingButtonAction?()
     }
 }
 

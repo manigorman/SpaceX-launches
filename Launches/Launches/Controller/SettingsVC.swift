@@ -12,6 +12,10 @@ class SettingsVC: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.identifier)
+        table.allowsSelection = false
+        table.separatorStyle = UITableViewCell.SeparatorStyle.none
+        table.isScrollEnabled = false
+        table.showsVerticalScrollIndicator = false
         table.translatesAutoresizingMaskIntoConstraints = false
         
         return table
@@ -55,10 +59,11 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as? SettingsTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.identifier, for: indexPath) as? SettingsTableViewCell else {
             return UITableViewCell()
         }
-        cell.configure(with: "Height", left: "m", right: "ft")
+        cell.configure(with: "jalkfjkal", items: ["a", "b"])
+        
         return cell
     }
     

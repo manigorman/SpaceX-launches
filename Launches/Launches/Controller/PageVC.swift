@@ -65,7 +65,7 @@ class PageVC: UIPageViewController {
     
     func setupViews() {
         
-        view.backgroundColor = .purple
+        view.backgroundColor = .systemBackground
         
         view.addSubview(pageControl)
         pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)

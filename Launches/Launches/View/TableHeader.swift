@@ -9,7 +9,7 @@ import UIKit
 
 class TableHeader: UITableViewHeaderFooterView {
 
-    static let identifier = "TableHaader"
+    static let identifier = "TableHeader"
     
     private let label: UILabel = {
         let label = UILabel()
