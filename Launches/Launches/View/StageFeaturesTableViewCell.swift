@@ -17,7 +17,7 @@ class StageFeaturesTableViewCell: UITableViewCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.spacing = 16
+//        stack.spacing = 16
         stack.alignment = .leading
         stack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -28,7 +28,7 @@ class StageFeaturesTableViewCell: UITableViewCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.spacing = 16
+//        stack.spacing = 16
         stack.alignment = .trailing
         stack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -42,7 +42,6 @@ class StageFeaturesTableViewCell: UITableViewCell {
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Количество двигателей"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Количество топлива"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Время сгорания"))
-        
         contentView.addSubview(featuresStack)
         contentView.addSubview(valuesStack)
         

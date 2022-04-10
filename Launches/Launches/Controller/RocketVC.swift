@@ -53,13 +53,16 @@ class RocketVC: UIViewController {
     
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
+        
         table.allowsSelection = false
         table.separatorStyle = UITableViewCell.SeparatorStyle.none
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.showsVerticalScrollIndicator = false
         
         table.register(FeaturesTableViewCell.self, forCellReuseIdentifier: FeaturesTableViewCell.identifier)
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         table.register(GeneralFeaturesTableViewCell.self, forCellReuseIdentifier: GeneralFeaturesTableViewCell.identifier)
+        table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: TableHeader.identifier)
         table.register(StageFeaturesTableViewCell.self, forCellReuseIdentifier: StageFeaturesTableViewCell.identifier)
         table.register(SeeLaunchesTableViewCell.self, forCellReuseIdentifier: SeeLaunchesTableViewCell.identifier)
         
@@ -94,9 +97,9 @@ class RocketVC: UIViewController {
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
@@ -107,7 +110,7 @@ class RocketVC: UIViewController {
     }
     
     func configure(with rocket: Rocket) {
-        models.append(contentsOf: [.titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(systemName: "star.fill"), handler: {
+        models.append(contentsOf: [.titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
             return
         })),
                                    .featuresSection(model: FeaturesSection(heightLabel: String(rocket.height.meters),
@@ -143,12 +146,12 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch models[section] {
             case .stageFeaturesSection(_, let header):
-                let label = UILabel()
-                label.font = .systemFont(ofSize: 16, weight: .bold)
-                label.text = header
-            label.backgroundColor = .link
-                return label
-            default: return nil
+                let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeader.identifier) as? TableHeader
+                headerView?.configure(with: header)
+                
+                return headerView
+            
+        default: return nil
         }
     }
     
@@ -203,6 +206,15 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
         header.scrollViewDidScroll(scrollView: scrollView)
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 3, 4:
+            return 60
+        default:
+            return 0
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
@@ -221,7 +233,6 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
 
 extension RocketVC: SettingButtonPressedDelegate {
     func settingButtonUsage(_ titleTableViewCell: TitleTableViewCell) {
-//        present(SettingsVC(), animated: true, completion: nil)
         let vc = SettingsVC()
         self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }

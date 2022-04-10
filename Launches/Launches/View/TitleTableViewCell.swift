@@ -22,7 +22,7 @@ class TitleTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .systemFont(ofSize: 24, weight: .regular)
+        label.font = .systemFont(ofSize: 24, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -32,6 +32,8 @@ class TitleTableViewCell: UITableViewCell {
         let button = UIButton()
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         button.addTarget(self, action: #selector(settingButtonPressed), for: .touchUpInside)
         
         return button
@@ -40,7 +42,6 @@ class TitleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         contentView.addSubview(titleLabel)
         contentView.addSubview(settingButton)
         
@@ -61,8 +62,8 @@ class TitleTableViewCell: UITableViewCell {
             
             settingButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             settingButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            settingButton.heightAnchor.constraint(equalToConstant: 28),
-            settingButton.widthAnchor.constraint(equalToConstant: 28)
+            settingButton.heightAnchor.constraint(equalToConstant: 32),
+            settingButton.widthAnchor.constraint(equalToConstant: 32)
 //            settingButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }

@@ -17,7 +17,7 @@ class GeneralFeaturesTableViewCell: UITableViewCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        stack.spacing = 16
+//        stack.spacing = 16
         stack.alignment = .leading
         stack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -42,7 +42,6 @@ class GeneralFeaturesTableViewCell: UITableViewCell {
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Первый запуск"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Страна"))
         featuresStack.addArrangedSubview(createFeatureLabel(with: "Стоимость груза"))
-        
         contentView.addSubview(featuresStack)
         contentView.addSubview(valuesStack)
         

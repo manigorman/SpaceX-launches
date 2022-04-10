@@ -34,7 +34,6 @@ class SeeLaunchesTableViewCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(seeLaunchesButton)
-        
         setConstraints()
     }
     
