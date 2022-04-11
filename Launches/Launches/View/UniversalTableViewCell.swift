@@ -33,32 +33,29 @@ class UniversalTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(leftLabel)
-        contentView.addSubview(rightLabel)
-        contentView.backgroundColor = UIColor(named: "Background")
+        setupViews()
         setConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
-    public func configure(leftText: String, rightText: String) {
-        self.leftLabel.text = leftText
-        self.rightLabel.text = rightText
+    
+    // MARK: - Setup
+    
+    private func setupViews() {
+        contentView.addSubview(leftLabel)
+        contentView.addSubview(rightLabel)
+        contentView.backgroundColor = UIColor(named: "Background")
     }
     
     private func setConstraints() {
-        
         NSLayoutConstraint.activate([
-            
             leftLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             leftLabel.topAnchor.constraint(equalTo: topAnchor),
             leftLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -71,4 +68,8 @@ class UniversalTableViewCell: UITableViewCell {
         ])
     }
 
+    public func configure(leftText: String, rightText: String) {
+        self.leftLabel.text = leftText
+        self.rightLabel.text = rightText
+    }
 }

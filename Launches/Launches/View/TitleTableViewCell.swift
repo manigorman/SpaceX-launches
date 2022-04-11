@@ -28,26 +28,33 @@ class TitleTableViewCell: UITableViewCell {
     private let settingButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor(named: "LabelHighEmphasis")
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
         button.addTarget(self, action: #selector(settingButtonPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(settingButton)
-        contentView.backgroundColor = UIColor(named: "Background")
         
+        setupViews()
         setConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup
+    
+    private func setupViews() {
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(settingButton)
+        contentView.backgroundColor = UIColor(named: "Background")
     }
     
     private func setConstraints() {
@@ -65,13 +72,16 @@ class TitleTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Selectors
+    
+    @objc private func settingButtonPressed() {
+        settingButtonAction?()
+    }
+    
+    // MARK: - Methods
+    
     public func configure(with model: TitleSection) {
         self.titleLabel.text = model.titleLabel
         self.settingButton.setImage(model.icon, for: .normal)
-    }
-    
-    @objc private func settingButtonPressed() {
-//        self.delegate?.settingButtonUsage(self)
-        settingButtonAction?()
     }
 }

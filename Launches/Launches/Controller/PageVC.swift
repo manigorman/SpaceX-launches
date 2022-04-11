@@ -18,9 +18,10 @@ class PageVC: UIPageViewController {
     
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.currentPageIndicatorTintColor = .label
         pageControl.pageIndicatorTintColor = .systemGray2
+        pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         return pageControl
     }()
@@ -39,46 +40,40 @@ class PageVC: UIPageViewController {
     
     // MARK: - Life Cycle
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
-        
-        if NetworkMonitor.shared.isConnected {
-            fetchRocket()
-        }
-        else {
-            self.performAlert()
-        }
-    
         setupViews()
         setConstraints()
         setDelegate()
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
+        
+        if NetworkMonitor.shared.isConnected {
+            print("connected")
+            fetchRocket()
+        } else {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Warning", message: "Network Data is Turned Off", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     // MARK: - Setup
     
     func setupViews() {
-        
         view.backgroundColor = UIColor(named: "Background")
-        
         view.addSubview(pageControl)
-        pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
     }
     
     private func setDelegate() {
-        
         dataSource = self
         delegate = self
     }
     
     private func setConstraints() {
-        
         NSLayoutConstraint.activate([
             pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20),
@@ -89,41 +84,38 @@ class PageVC: UIPageViewController {
     // MARK: - Selectors
     
     @objc func showOfflineDeviceUI(_ notification: Notification) {
-       if NetworkMonitor.shared.isConnected {
-           print("Появилась")
-           fetchRocket()
-       } else {
-           print("Пропала")
-       }
+//        if NetworkMonitor.shared.isConnected {
+//            DispatchQueue.main.async {
+//                self.performAlert()
+//            }
+//        } else {
+//        }
     }
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
     }
     
+    // MARK: - Methods
+    
     private func fetchRocket() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            APICaller.shared.getRockets { [weak self] result in
-                switch result {
-                case .success(let rockets):
-                    allRockets = rockets
-                    DispatchQueue.main.async {
-                        self?.configurePages()
-                    }
-                case .failure(let error):
-                    print(error)
+        APICaller.shared.getRockets { [weak self] result in
+            switch result {
+            case .success(let rockets):
+                allRockets = rockets
+                DispatchQueue.main.async {
+                    self?.configurePages()
                 }
+            case .failure(let error):
+                print(error)
             }
-            print("Downloaded")
         }
+        print("Downloaded")
     }
     
     private func configurePages() {
-        /// create an array of viewController
         for rocket in allRockets {
             let page = RocketVC()
-//            let navVC = UINavigationController(rootViewController: page)
-//            navVC.isNavigationBarHidden = true
             page.headerLink = rocket.flickr_images.randomElement() ?? ""
             page.configure(with: rocket)
             pages.append(page)
@@ -135,9 +127,9 @@ class PageVC: UIPageViewController {
         setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
     }
     
-    func performAlert() {
+    private func performAlert() {
         let alert = UIAlertController(title: "Warning", message: "Network Data is Turned Off", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -151,10 +143,9 @@ extension PageVC: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
         
         if currentIndex == 0 {
-//            return pages.last               // wrap to last
             return nil
         } else {
-            return pages[currentIndex - 1]  // go previous
+            return pages[currentIndex - 1]
         }
     }
     
@@ -163,9 +154,8 @@ extension PageVC: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
         
         if currentIndex < pages.count - 1 {
-            return pages[currentIndex + 1]  // go next
+            return pages[currentIndex + 1]
         } else {
-//            return pages.first              // wrap to first
             return nil
         }
     }

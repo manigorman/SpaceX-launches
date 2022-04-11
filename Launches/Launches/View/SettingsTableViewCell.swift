@@ -31,35 +31,28 @@ class SettingsTableViewCell: UITableViewCell {
         return segment
     }()
     
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(label)
-        contentView.addSubview(segmentedControl)
-//        contentView.backgroundColor = UIColor(named: "Background")
-        
+        setupViews()
         setConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
-    public func configure(with text: String, items: [String]) {
-        self.label.text = text
-        self.segmentedControl.insertSegment(withTitle: items[0], at: 0, animated: false)
-        self.segmentedControl.insertSegment(withTitle: items[1], at: 1, animated: false)
-        self.segmentedControl.selectedSegmentIndex = 0
+    
+    // MARK: - Setup
+    
+    private func setupViews() {
+        contentView.addSubview(label)
+        contentView.addSubview(segmentedControl)
     }
     
     private func setConstraints() {
-        
         NSLayoutConstraint.activate([
-            
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             label.topAnchor.constraint(equalTo: topAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -71,6 +64,15 @@ class SettingsTableViewCell: UITableViewCell {
             segmentedControl.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
+    
+    public func configure(with text: String, items: [String]) {
+        self.label.text = text
+        self.segmentedControl.insertSegment(withTitle: items[0], at: 0, animated: false)
+        self.segmentedControl.insertSegment(withTitle: items[1], at: 1, animated: false)
+        self.segmentedControl.selectedSegmentIndex = 0
+    }
+    
+    // MARK: - Selectors
     
     @objc func changeUnit(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {

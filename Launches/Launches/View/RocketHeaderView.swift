@@ -9,6 +9,8 @@ import UIKit
 
 class RocketHeaderView: UIView {
     
+    // MARK: - Properties
+    
     public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -28,8 +30,9 @@ class RocketHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createViews()
-        setViewConstraints()
+        
+        setupViews()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -37,12 +40,14 @@ class RocketHeaderView: UIView {
         fatalError()
     }
     
-    private func createViews() {
+    // MARK: - Setup
+    
+    private func setupViews() {
         addSubview(containerView)
         containerView.addSubview(imageView)
     }
     
-    private func setViewConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalTo: containerView.widthAnchor),
             centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -73,8 +78,9 @@ class RocketHeaderView: UIView {
     public func configure(with link: String) {
         guard let url = URL(string: link) else {return}
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             guard let data = try? Data(contentsOf: url) else {return}
+            
             DispatchQueue.main.async {
                 self.imageView.image = UIImage(data: data)
             }

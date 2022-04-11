@@ -25,8 +25,8 @@ extension Notification.Name {
 final class NetworkMonitor {
     static let shared = NetworkMonitor()
 
-    private let queue = DispatchQueue.global()
-//    private let queue = DispatchQueue(label: "NetworkConnectivityMonitor")
+//    private let queue = DispatchQueue.global()
+    private let queue = DispatchQueue(label: "NetworkConnectivityMonitor")
     private let monitor: NWPathMonitor
     
     public private(set) var isConnected: Bool = false
@@ -34,14 +34,14 @@ final class NetworkMonitor {
 
     private init() {
         self.monitor = NWPathMonitor()
-
     }
 
     public func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
+            
             self?.isConnected = path.status != .unsatisfied
             self?.currentConnectionType = NWInterface.InterfaceType.allCases.filter { path.usesInterfaceType($0) }.first
-            
+
             NotificationCenter.default.post(name: .connectivityStatus, object: nil)
         }
         

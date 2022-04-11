@@ -46,15 +46,17 @@ class RocketVC: UIViewController {
         
         table.allowsSelection = false
         table.separatorStyle = UITableViewCell.SeparatorStyle.none
-        table.translatesAutoresizingMaskIntoConstraints = false
         table.showsVerticalScrollIndicator = false
         table.contentInset.bottom = UIApplication.shared.windows.first!.safeAreaInsets.bottom
         table.backgroundColor = UIColor(named: "Background")
+        
         table.register(FeaturesTableViewCell.self, forCellReuseIdentifier: FeaturesTableViewCell.identifier)
         table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
         table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: TableHeader.identifier)
         table.register(SeeLaunchesTableViewCell.self, forCellReuseIdentifier: SeeLaunchesTableViewCell.identifier)
         table.register(UniversalTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.identifier)
+        
+        table.translatesAutoresizingMaskIntoConstraints = false
         
         return table
     }()
@@ -65,9 +67,12 @@ class RocketVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         setConstraints()
         setDelegate()
+        
+        headerView?.configure(with: headerLink)
     }
     
     // MARK: - Setup
@@ -79,7 +84,6 @@ class RocketVC: UIViewController {
         
         headerView = RocketHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
         tableView.tableHeaderView = headerView
-        self.headerView?.configure(with: headerLink)
     }
     
     private func setConstraints() {
@@ -97,8 +101,10 @@ class RocketVC: UIViewController {
         tableView.dataSource = self
     }
     
-    func configure(with rocket: Rocket) {
-        models.append(contentsOf: [
+    // MARK: - Methods
+    
+    public func configure(with rocket: Rocket) {
+        models = [
             .titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
                 return
             })),
@@ -122,7 +128,7 @@ class RocketVC: UIViewController {
                 Feature(title: "Время сгорания", value: String(rocket.first_stage.burn_time_sec ?? 0))
             ], header: "ВТОРАЯ СТУПЕНЬ"),
             .seeLaunchesSection
-        ])
+        ]
     }
 }
 
@@ -169,6 +175,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath) as? TitleTableViewCell else {
                 return UITableViewCell()
             }
+            
             cell.configure(with: model)
 
             cell.settingButtonAction = { [unowned self] in
@@ -180,14 +187,6 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                     sheet.detents = [.medium(), .large()]
                 }
                 self.present(nav, animated: true, completion: nil)
-
-//                self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
-                
-//                let alert = UIAlertController(title: "Subscribed!", message: "Subscribed to ", preferredStyle: .alert)
-//                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//                alert.addAction(okAction)
-//
-//                self.present(alert, animated: true, completion: nil)
             }
             
             return cell

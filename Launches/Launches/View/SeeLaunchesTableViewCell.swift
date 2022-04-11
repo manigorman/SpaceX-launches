@@ -9,6 +9,8 @@ import UIKit
 
 class SeeLaunchesTableViewCell: UITableViewCell {
 
+    // MARK: - Properties
+    
     static let identifier = "SeeLaunchesTableViewCell"
     
     weak var delegate: SeeLaunchesTableViewCell?
@@ -20,22 +22,30 @@ class SeeLaunchesTableViewCell: UITableViewCell {
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         button.backgroundColor = UIColor(named: "Card")
         button.layer.cornerRadius = 12
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(seeLaunchesButtonPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(seeLaunchesButton)
-        contentView.backgroundColor = UIColor(named: "Background")
+        
+        setupViews()
         setConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup
+    
+    private func setupViews() {
+        contentView.addSubview(seeLaunchesButton)
+        contentView.backgroundColor = UIColor(named: "Background")
     }
     
     private func setConstraints() {

@@ -9,6 +9,8 @@ import UIKit
 
 class FeaturesCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
@@ -41,29 +43,32 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FeaturesCollectionViewCell"
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        stack.addArrangedSubview(valueLabel)
-        stack.addArrangedSubview(dimensionLabel)
-        contentView.addSubview(stack)
-        contentView.backgroundColor = UIColor(named: "Card")
+        setupViews()
         setConstraints()
-        
-        contentView.layer.cornerRadius = 32
-        contentView.layer.masksToBounds = true
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    // MARK: - Setup
+    
+    func setupViews() {
+        stack.addArrangedSubview(valueLabel)
+        stack.addArrangedSubview(dimensionLabel)
+        contentView.addSubview(stack)
+        contentView.backgroundColor = UIColor(named: "Card")
+        
+        contentView.layer.cornerRadius = 32
+        contentView.layer.masksToBounds = true
     }
     
     func setConstraints() {
-        
         NSLayoutConstraint.activate([
             stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             stack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -72,21 +77,11 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    // MARK: - Methods
+    
     public func configure(with model: Feature) {
         self.valueLabel.text = model.value
         self.dimensionLabel.text = model.title
     }
-    
-    
-    
-    //       public func configure(with model: String) {
-    //           guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else {return}
-    //           DispatchQueue.global().async {
-    //               guard let data = try? Data(contentsOf: url) else {return}
-    //               DispatchQueue.main.async {
-    //                   self.posterImageView.image = UIImage(data: data)
-    //               }
-    //           }
-    //       }
     
 }
