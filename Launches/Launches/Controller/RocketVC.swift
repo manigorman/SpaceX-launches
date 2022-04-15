@@ -12,7 +12,7 @@ enum SectionType {
     case featuresSection(model: FeaturesSection)
     case generalFeaturesSection(model: [Feature])
     case stageFeaturesSection(model: [Feature], header: String)
-    case seeLaunchesSection
+    case seeLaunchesSection(title: String)
 }
 
 struct TitleSection {
@@ -127,7 +127,7 @@ class RocketVC: UIViewController {
                 Feature(title: "Количество топлива", value: String(rocket.second_stage.fuel_amount_tons ?? 0)),
                 Feature(title: "Время сгорания", value: String(rocket.first_stage.burn_time_sec ?? 0))
             ], header: "ВТОРАЯ СТУПЕНЬ"),
-            .seeLaunchesSection
+            .seeLaunchesSection(title: rocket.name)
         ]
     }
 }
@@ -214,9 +214,20 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             cell.configure(leftText: model[currentRow].title, rightText: model[currentRow].value)
             
             return cell
-        case .seeLaunchesSection:
+        case .seeLaunchesSection(let title):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SeeLaunchesTableViewCell.identifier, for: indexPath) as? SeeLaunchesTableViewCell else {
                 return UITableViewCell()
+            }
+            
+            cell.seeLaunchesButtonAction = { [unowned self] in
+                
+                let vc = LaunchesVC()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                
+                nav.navigationBar.topItem?.title = title
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             
             return cell

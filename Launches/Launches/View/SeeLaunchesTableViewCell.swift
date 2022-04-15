@@ -13,7 +13,7 @@ class SeeLaunchesTableViewCell: UITableViewCell {
     
     static let identifier = "SeeLaunchesTableViewCell"
     
-    weak var delegate: SeeLaunchesTableViewCell?
+    var seeLaunchesButtonAction: (() -> ())?
     
     private let seeLaunchesButton: UIButton = {
         let button = UIButton()
@@ -58,11 +58,7 @@ class SeeLaunchesTableViewCell: UITableViewCell {
         ])
     }
     
-//    public func configure(with model: TitleSection) {
-//        self.settingButton.setImage(model.icon, for: .normal)
-//    }
-    
     @objc private func seeLaunchesButtonPressed() {
-        
+        seeLaunchesButtonAction?()
     }
 }

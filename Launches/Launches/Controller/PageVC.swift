@@ -47,16 +47,14 @@ class PageVC: UIPageViewController {
         setConstraints()
         setDelegate()
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
         
         if NetworkMonitor.shared.isConnected {
             print("connected")
             fetchRocket()
         } else {
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Warning", message: "Network Data is Turned Off", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                self.performAlert()
             }
         }
     }
@@ -84,12 +82,12 @@ class PageVC: UIPageViewController {
     // MARK: - Selectors
     
     @objc func showOfflineDeviceUI(_ notification: Notification) {
-//        if NetworkMonitor.shared.isConnected {
-//            DispatchQueue.main.async {
-//                self.performAlert()
-//            }
-//        } else {
-//        }
+        if !NetworkMonitor.shared.isConnected && !APICaller.areRocketsUploaded {
+            fetchRocket()
+        }
+        else {
+            print("already done")
+        }
     }
     
     @objc private func pageControlTapped(_ sender: UIPageControl) {
@@ -118,7 +116,10 @@ class PageVC: UIPageViewController {
             let page = RocketVC()
             page.headerLink = rocket.flickr_images.randomElement() ?? ""
             page.configure(with: rocket)
-            pages.append(page)
+            
+            let navVC = UINavigationController(rootViewController: page)
+            navVC.isNavigationBarHidden = true
+            pages.append(navVC)
         }
         
         pageControl.numberOfPages = pages.count
@@ -128,9 +129,25 @@ class PageVC: UIPageViewController {
     }
     
     private func performAlert() {
-        let alert = UIAlertController(title: "Warning", message: "Network Data is Turned Off", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        
+        let alertController = UIAlertController (title: "Warning", message: "Please connect to the Internet", preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+            
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

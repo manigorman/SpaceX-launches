@@ -25,7 +25,6 @@ extension Notification.Name {
 final class NetworkMonitor {
     static let shared = NetworkMonitor()
 
-//    private let queue = DispatchQueue.global()
     private let queue = DispatchQueue(label: "NetworkConnectivityMonitor")
     private let monitor: NWPathMonitor
     

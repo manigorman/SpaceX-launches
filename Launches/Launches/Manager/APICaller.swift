@@ -16,6 +16,8 @@ class APICaller {
     
     static let shared = APICaller()
     
+    static var areRocketsUploaded = false
+    
     func getRockets(completion: @escaping (Result<[Rocket], Error>) -> Void) {
         guard let url = URL(string: Constants.rocketsAPIKey) else {
             return
@@ -29,6 +31,8 @@ class APICaller {
             do {
                 let results = try JSONDecoder().decode([Rocket].self, from: data)
                 completion(.success(results))
+                
+                APICaller.areRocketsUploaded = true
             }
             catch {
                 completion(.failure(error))
