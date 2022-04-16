@@ -9,6 +9,7 @@ import UIKit
 import Network
 
 var allRockets: [Rocket] = []
+var allLaunches: [Launch] = []
 
 class PageVC: UIPageViewController {
     
@@ -52,6 +53,7 @@ class PageVC: UIPageViewController {
         if NetworkMonitor.shared.isConnected {
             print("connected")
             fetchRocket()
+            fetchLaunches()
         } else {
             DispatchQueue.main.async {
                 self.performAlert()
@@ -101,9 +103,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let rockets):
                 allRockets = rockets
-                DispatchQueue.main.async {
-                    self?.configurePages()
-                }
+//                DispatchQueue.main.async {
+//                    self?.configurePages()
+//                }
             case .failure(let error):
                 print(error)
             }
@@ -111,11 +113,28 @@ class PageVC: UIPageViewController {
         print("Downloaded")
     }
     
+    private func fetchLaunches() {
+        APICaller.shared.getLaunches { [weak self] result in
+            switch result {
+            case .success(let launches):
+                allLaunches = launches
+                DispatchQueue.main.async {
+                    self?.configurePages()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     private func configurePages() {
         for rocket in allRockets {
             let page = RocketVC()
             page.headerLink = rocket.flickr_images.randomElement() ?? ""
-            page.configure(with: rocket)
+            let currentRocketLaunches = allLaunches.filter {
+                return $0.rocket! == rocket.id
+            }
+            page.configure(with: rocket, and: currentRocketLaunches)
             
             let navVC = UINavigationController(rootViewController: page)
             navVC.isNavigationBarHidden = true

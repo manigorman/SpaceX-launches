@@ -15,8 +15,8 @@ struct Rocket: Codable {
     let payload_weights: [Weight]
     
     let name: String
+    var first_flight: String
     
-    let first_flight: String
     let country: String
     let cost_per_launch: Double
     
@@ -24,6 +24,8 @@ struct Rocket: Codable {
     let second_stage: Stage
     
     let flickr_images: [String]
+    
+    let id: String
 }
 
 struct Length: Codable {

@@ -11,6 +11,8 @@ class LaunchesVC: UIViewController {
     
     // MARK: - Properties
     
+    private var launches: [Launch] = []
+    
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         
@@ -70,6 +72,12 @@ class LaunchesVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    // MARK: - Methods
+    
+    public func configure(with launches: [Launch]) {
+        self.launches = launches
+    }
 }
 
 // MARK: - Extensions
@@ -80,20 +88,25 @@ extension LaunchesVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        launches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: LaunchesTableViewCell.identifier, for: indexPath) as? LaunchesTableViewCell else {
             return UITableViewCell()
         }
-        cell.configure(title: "fa", date: "fadsfa", isSuccessfull: true)
+        
+        let dateFormatter = DateFormatter()
+        let date = Date(timeIntervalSince1970: launches[indexPath.row].date_unix!)
+        dateFormatter.dateStyle = .long
+        
+        cell.configure(title: launches[indexPath.row].name!, date: dateFormatter.string(from: date), isSuccessfull: launches[indexPath.row].success ?? false)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        116
     }
 }
 

@@ -17,6 +17,7 @@ class APICaller {
     static let shared = APICaller()
     
     static var areRocketsUploaded = false
+    static var areLaunchesUploaded = false
     
     func getRockets(completion: @escaping (Result<[Rocket], Error>) -> Void) {
         guard let url = URL(string: Constants.rocketsAPIKey) else {
@@ -33,6 +34,29 @@ class APICaller {
                 completion(.success(results))
                 
                 APICaller.areRocketsUploaded = true
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func getLaunches(completion: @escaping (Result<[Launch], Error>) -> Void) {
+        guard let url = URL(string: Constants.launchesAPIKey) else {
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do {
+                let results = try JSONDecoder().decode([Launch].self, from: data)
+                completion(.success(results))
+                
+                APICaller.areLaunchesUploaded = true
             }
             catch {
                 completion(.failure(error))

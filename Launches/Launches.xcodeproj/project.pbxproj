@@ -15,6 +15,7 @@
 		C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559201027F82DA200AD2D3B /* RocketHeaderView.swift */; };
 		C57482C827FEDB050026E23D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482C727FEDB050026E23D /* APICaller.swift */; };
 		C57482CB27FEDBE40026E23D /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57482CA27FEDBE40026E23D /* Rocket.swift */; };
+		C5807D182809DFAE00D3028B /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5807D172809DFAE00D3028B /* Launch.swift */; };
 		C58A447727FE336D00F07777 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A447627FE336D00F07777 /* TitleTableViewCell.swift */; };
 		C592AD7027F43FBE00AC96D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592AD6F27F43FBE00AC96D2 /* AppDelegate.swift */; };
 		C592AD7227F43FBE00AC96D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592AD7127F43FBE00AC96D2 /* SceneDelegate.swift */; };
@@ -40,6 +41,7 @@
 		C559201027F82DA200AD2D3B /* RocketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketHeaderView.swift; sourceTree = "<group>"; };
 		C57482C727FEDB050026E23D /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		C57482CA27FEDBE40026E23D /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
+		C5807D172809DFAE00D3028B /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		C58A447627FE336D00F07777 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		C592AD6C27F43FBE00AC96D2 /* Launches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Launches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C592AD6F27F43FBE00AC96D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				C57482CA27FEDBE40026E23D /* Rocket.swift */,
+				C5807D172809DFAE00D3028B /* Launch.swift */,
 				C53F680128098BEF00AA9300 /* Settings.swift */,
 			);
 			path = Model;
@@ -139,8 +142,8 @@
 				C5CDB22627F8D5B700A741AA /* FeaturesTableViewCell.swift */,
 				C5CDB22A27F8D71B00A741AA /* FeaturesCollectionViewCell.swift */,
 				C5AC44DE2802DA1900D67BFD /* TableHeader.swift */,
-				C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */,
 				C5AC44E02802F0B900D67BFD /* UniversalTableViewCell.swift */,
+				C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */,
 				C5D46D7627F834DF0050C8E7 /* SettingsTableViewCell.swift */,
 				C53F68052809A5EF00AA9300 /* LaunchesTableViewCell.swift */,
 			);
@@ -221,6 +224,7 @@
 				C5AC44E12802F0B900D67BFD /* UniversalTableViewCell.swift in Sources */,
 				C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */,
 				C57482C827FEDB050026E23D /* APICaller.swift in Sources */,
+				C5807D182809DFAE00D3028B /* Launch.swift in Sources */,
 				C53BB47927F7592300B7998C /* RocketVC.swift in Sources */,
 				C53F680428098F2100AA9300 /* UserDefaultsManager.swift in Sources */,
 				C592AD7427F43FBE00AC96D2 /* PageVC.swift in Sources */,

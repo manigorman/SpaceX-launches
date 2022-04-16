@@ -38,6 +38,7 @@ class RocketVC: UIViewController {
     // MARK: - Properties
     
     private var models = [SectionType]()
+    private var launches = [Launch]()
     
     public var headerLink = ""
     
@@ -103,7 +104,13 @@ class RocketVC: UIViewController {
     
     // MARK: - Methods
     
-    public func configure(with rocket: Rocket) {
+    public func configure(with rocket: Rocket, and launches: [Launch]) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: rocket.first_flight)
+        dateFormatter.dateStyle = .long
+        
         models = [
             .titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
                 return
@@ -113,7 +120,7 @@ class RocketVC: UIViewController {
                                                     massLabel: String(rocket.mass.kg),
                                                     weightLabel: String(rocket.payload_weights[0].kg))),
             .generalFeaturesSection(model: [
-                Feature(title: "Первый запуск", value: rocket.first_flight),
+                Feature(title: "Первый запуск", value: dateFormatter.string(from: date!)),
                 Feature(title: "Страна", value: rocket.country),
                 Feature(title: "Стоимость груза", value: String(rocket.cost_per_launch))
             ]),
@@ -129,6 +136,7 @@ class RocketVC: UIViewController {
             ], header: "ВТОРАЯ СТУПЕНЬ"),
             .seeLaunchesSection(title: rocket.name)
         ]
+        self.launches = launches
     }
 }
 
@@ -222,6 +230,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
             cell.seeLaunchesButtonAction = { [unowned self] in
                 
                 let vc = LaunchesVC()
+                vc.configure(with: launches)
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 

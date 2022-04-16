@@ -13,7 +13,14 @@ class LaunchesTableViewCell: UITableViewCell {
     
     static let identifier = "LaunchesTableViewCell"
     
-//    var seeLaunchesButtonAction: (() -> ())?
+    private let cardView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "Card")
+        view.layer.cornerRadius = 24
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
     
     private let missionTitle: UILabel = {
         let label = UILabel()
@@ -72,25 +79,30 @@ class LaunchesTableViewCell: UITableViewCell {
     // MARK: - Setup
     
     private func setupViews() {
+        contentView.backgroundColor = UIColor(named: "Background")
         stack.addArrangedSubview(missionTitle)
         stack.addArrangedSubview(missionDate)
-        contentView.addSubview(stack)
-        contentView.addSubview(isSuccessfullImage)
-        
-        contentView.backgroundColor = UIColor(named: "Card")
+        contentView.addSubview(cardView)
+        cardView.addSubview(stack)
+        cardView.addSubview(isSuccessfullImage)
     }
     
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            stack.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            cardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
+            cardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            cardView.topAnchor.constraint(equalTo: topAnchor),
+            cardView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            
+            stack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 24),
+            stack.widthAnchor.constraint(equalTo: cardView.widthAnchor, multiplier: 0.5),
+            stack.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             stack.heightAnchor.constraint(equalToConstant: 52),
             
             isSuccessfullImage.widthAnchor.constraint(equalToConstant: 32),
-            isSuccessfullImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
-            isSuccessfullImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+            isSuccessfullImage.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -32),
+            isSuccessfullImage.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             isSuccessfullImage.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
@@ -98,12 +110,15 @@ class LaunchesTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     public func configure(title: String, date: String, isSuccessfull: Bool) {
-        self.missionTitle.text = "FalconSat"
-        self.missionDate.text = "6 jan, 2001"
+        self.missionTitle.text = title
+        self.missionDate.text = date
+        
         if isSuccessfull {
-            self.isSuccessfullImage.image = UIImage(systemName: "xmark")
+            self.isSuccessfullImage.image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
+            self.isSuccessfullImage.tintColor = .systemGreen
         } else {
-            self.isSuccessfullImage.image = UIImage(systemName: "checkmark")
+            self.isSuccessfullImage.image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
+            self.isSuccessfullImage.tintColor = .systemRed
         }
     }
 }
