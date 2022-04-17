@@ -224,8 +224,12 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                 let vc = SettingsVC()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .pageSheet
-                if let sheet = nav.sheetPresentationController {
-                    sheet.detents = [.medium(), .large()]
+                if #available(iOS 15.0, *) {
+                    if let sheet = nav.sheetPresentationController {
+                        sheet.detents = [.medium(), .large()]
+                    }
+                } else {
+                    // Fallback on earlier versions
                 }
                 self.present(nav, animated: true, completion: nil)
             }

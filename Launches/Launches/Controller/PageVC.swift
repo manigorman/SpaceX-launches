@@ -125,9 +125,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let rockets):
                 allRockets = rockets
-                DispatchQueue.main.async {
-                    self?.configurePages()
-                }
+//                DispatchQueue.main.async {
+//                    self?.configurePages()
+//                }
             case .failure(let error):
                 print(error)
             }
@@ -140,9 +140,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let launches):
                 allLaunches = launches
-//                DispatchQueue.main.async {
-//                    self?.configurePages()
-//                }
+                DispatchQueue.main.async {
+                    self?.configurePages()
+                }
             case .failure(let error):
                 print(error)
             }
@@ -153,6 +153,7 @@ class PageVC: UIPageViewController {
         for rocket in allRockets {
             let page = RocketVC()
             page.headerLink = rocket.flickr_images.randomElement() ?? ""
+
             let currentRocketLaunches = allLaunches.filter {
                 return $0.rocket! == rocket.id
             }
