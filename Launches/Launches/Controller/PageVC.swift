@@ -51,8 +51,6 @@ class PageVC: UIPageViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(updateFeatures), name: NSNotification.Name.settingsChanged, object: nil)
-        
         if !UserDefaultsManager.shared.isExist(for: UserDefaultsManager.settingsKey) {
             UserDefaultsManager.shared.setData(with: settings, for: UserDefaultsManager.settingsKey)
         } else {
@@ -101,8 +99,15 @@ class PageVC: UIPageViewController {
     // MARK: - Selectors
     
     @objc func showOfflineDeviceUI(_ notification: Notification) {
-        if !NetworkMonitor.shared.isConnected && !APICaller.areRocketsUploaded {
-            fetchRocket()
+        if !NetworkMonitor.shared.isConnected {
+            if !APICaller.areLaunchesUploaded {
+                fetchLaunches()
+                print("launches")
+            }
+            if !APICaller.areRocketsUploaded {
+                fetchRocket()
+                print("rockets")
+            }
         }
         else {
             print("already done")
@@ -113,11 +118,6 @@ class PageVC: UIPageViewController {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
     }
     
-//    @objc private func updateFeatures() {
-//        DispatchQueue.main.async {
-//        }
-//    }
-    
     // MARK: - Methods
     
     private func fetchRocket() {
@@ -125,9 +125,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let rockets):
                 allRockets = rockets
-                //                DispatchQueue.main.async {
-                //                    self?.configurePages()
-                //                }
+                DispatchQueue.main.async {
+                    self?.configurePages()
+                }
             case .failure(let error):
                 print(error)
             }
@@ -140,9 +140,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let launches):
                 allLaunches = launches
-                DispatchQueue.main.async {
-                    self?.configurePages()
-                }
+//                DispatchQueue.main.async {
+//                    self?.configurePages()
+//                }
             case .failure(let error):
                 print(error)
             }

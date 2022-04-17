@@ -7,16 +7,6 @@
 
 import Foundation
 
-//enum LengthUnit: String, Codable {
-//    case m
-//    case ft
-//}
-//
-//enum MassUnit: String, Codable {
-//    case kg
-//    case lb
-//}
-
 enum LengthUnit: Int, Codable, CaseIterable {
     case m = 0, ft = 1
     

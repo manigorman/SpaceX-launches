@@ -46,6 +46,8 @@ class RocketVC: UIViewController {
     private var models = [SectionType]()
     private var launches = [Launch]()
     
+    private var rocket: Rocket? = nil
+    
     public var headerLink = ""
     
     private let tableView: UITableView = {
@@ -80,6 +82,8 @@ class RocketVC: UIViewController {
         setDelegate()
         
         headerView?.configure(with: headerLink)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFeatures), name: NSNotification.Name.settingsChanged, object: nil)
     }
     
     // MARK: - Setup
@@ -111,9 +115,10 @@ class RocketVC: UIViewController {
     // MARK: - Methods
     
     public func configure(with rocket: Rocket, and launches: [Launch]) {
+        self.rocket = rocket
         
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+        dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: rocket.first_flight)
         dateFormatter.dateStyle = .long
@@ -122,7 +127,6 @@ class RocketVC: UIViewController {
         let diameter = settings.diameter.rawValue == 0 ? "\(rocket.diameter.meters.clean)" : "\(rocket.diameter.feet.clean)"
         let mass = settings.mass.rawValue == 0 ? "\(rocket.mass.kg.clean)" : "\(rocket.mass.lb.clean)"
         let payload = settings.payload.rawValue == 0 ? "\(rocket.payload_weights[0].kg.clean)" : "\(rocket.payload_weights[0].lb.clean)"
-        
         models = [
             .titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
                 return
@@ -153,6 +157,20 @@ class RocketVC: UIViewController {
     
     // MARK: - Selectors
     
+    @objc private func updateFeatures() {
+        DispatchQueue.main.async {
+            let height = settings.height.rawValue == 0 ? "\(self.rocket!.height.meters.clean)" : "\(self.rocket!.height.feet.clean)"
+            let diameter = settings.diameter.rawValue == 0 ? "\(self.rocket!.diameter.meters.clean)" : "\(self.rocket!.diameter.feet.clean)"
+            let mass = settings.mass.rawValue == 0 ? "\(self.rocket!.mass.kg.clean)" : "\(self.rocket!.mass.lb.clean)"
+            let payload = settings.payload.rawValue == 0 ? "\(self.rocket!.payload_weights[0].kg.clean)" : "\(self.rocket!.payload_weights[0].lb.clean)"
+            
+            self.models[1] = .featuresSection(model: FeaturesSection(heightLabel: height,
+                                                               diameterLabel: diameter,
+                                                               massLabel: mass,
+                                                               weightLabel: payload))
+            self.tableView.reloadData()
+        }
+    }
 }
 
 // MARK: - Extensions
@@ -160,7 +178,7 @@ class RocketVC: UIViewController {
 extension RocketVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        models.count
+        return models.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

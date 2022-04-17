@@ -61,9 +61,9 @@ class UniversalTableViewCell: UITableViewCell {
             leftLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             leftLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            rightLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             rightLabel.topAnchor.constraint(equalTo: topAnchor),
             rightLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            rightLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             rightLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }

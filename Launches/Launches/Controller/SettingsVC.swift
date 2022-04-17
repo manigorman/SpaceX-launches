@@ -47,20 +47,15 @@ class SettingsVC: UIViewController {
         ]
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         
         settings = UserSettings(height: LengthUnit(rawValue: units[0].chosenUnit)!,
                                 diameter: LengthUnit(rawValue: units[1].chosenUnit)!,
                                 mass: MassUnit(rawValue: units[2].chosenUnit)!,
                                 payload: MassUnit(rawValue: units[3].chosenUnit)!)
         UserDefaultsManager.shared.setData(with: settings, for: UserDefaultsManager.settingsKey)
-//        NotificationCenter.default.post(name: .settingsChanged, object: nil)
+        NotificationCenter.default.post(name: .settingsChanged, object: nil)
     }
     
     // MARK: - Setup
@@ -115,7 +110,6 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.changedSegmentAction = { [unowned self] in
             self.units[indexPath.row].chosenUnit = (units[indexPath.row].chosenUnit + 1) % 2
-            print(self.units[indexPath.row].chosenUnit)
         }
         
         return cell
