@@ -20,6 +20,7 @@ extension NWInterface.InterfaceType: CaseIterable {
 
 extension Notification.Name {
     static let connectivityStatus = Notification.Name(rawValue: "connectivityStatusChanged")
+    static let settingsChanged = Notification.Name(rawValue: "settingsChanged")
 }
 
 final class NetworkMonitor {

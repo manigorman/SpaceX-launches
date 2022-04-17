@@ -39,21 +39,16 @@ class TableHeader: UITableViewHeaderFooterView {
     // MARK: - Setup
     
     private func setupViews() {
-        contentView.addSubview(label)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        label.sizeToFit()
+        addSubview(label)
     }
     
     func setConstraints() {
         
         NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+            label.heightAnchor.constraint(equalTo: heightAnchor),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
     

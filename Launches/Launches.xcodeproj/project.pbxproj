@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */; };
 		C53BB47927F7592300B7998C /* RocketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53BB47827F7592300B7998C /* RocketVC.swift */; };
-		C53F680228098BEF00AA9300 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53F680128098BEF00AA9300 /* Settings.swift */; };
+		C53F680228098BEF00AA9300 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53F680128098BEF00AA9300 /* UserSettings.swift */; };
 		C53F680428098F2100AA9300 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53F680328098F2100AA9300 /* UserDefaultsManager.swift */; };
 		C53F68062809A5EF00AA9300 /* LaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53F68052809A5EF00AA9300 /* LaunchesTableViewCell.swift */; };
 		C559201127F82DA200AD2D3B /* RocketHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559201027F82DA200AD2D3B /* RocketHeaderView.swift */; };
@@ -35,7 +35,7 @@
 /* Begin PBXFileReference section */
 		C52BFE70280031B7004CA1DF /* SeeLaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeLaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		C53BB47827F7592300B7998C /* RocketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketVC.swift; sourceTree = "<group>"; };
-		C53F680128098BEF00AA9300 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		C53F680128098BEF00AA9300 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		C53F680328098F2100AA9300 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		C53F68052809A5EF00AA9300 /* LaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		C559201027F82DA200AD2D3B /* RocketHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketHeaderView.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 			children = (
 				C57482CA27FEDBE40026E23D /* Rocket.swift */,
 				C5807D172809DFAE00D3028B /* Launch.swift */,
-				C53F680128098BEF00AA9300 /* Settings.swift */,
+				C53F680128098BEF00AA9300 /* UserSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,7 +240,7 @@
 				C5AC44DF2802DA1900D67BFD /* TableHeader.swift in Sources */,
 				C52BFE71280031B7004CA1DF /* SeeLaunchesTableViewCell.swift in Sources */,
 				C5D46D7527F8325B0050C8E7 /* SettingsVC.swift in Sources */,
-				C53F680228098BEF00AA9300 /* Settings.swift in Sources */,
+				C53F680228098BEF00AA9300 /* UserSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

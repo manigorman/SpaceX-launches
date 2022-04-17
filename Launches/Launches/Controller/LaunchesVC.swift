@@ -29,6 +29,18 @@ class LaunchesVC: UIViewController {
         return table
     }()
     
+    private let noLaunchesLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.text = "Не было запусков этой ракеты"
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "LabelMediumEmphasis")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -56,6 +68,7 @@ class LaunchesVC: UIViewController {
     private func setupViews() {
         view.backgroundColor = UIColor(named: "Background")
         view.addSubview(tableView)
+        view.addSubview(noLaunchesLabel)
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "LabelHighEmphasis") ?? .label]
     }
     
@@ -64,7 +77,12 @@ class LaunchesVC: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            
+            noLaunchesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noLaunchesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noLaunchesLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            noLaunchesLabel.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
     
@@ -76,7 +94,12 @@ class LaunchesVC: UIViewController {
     // MARK: - Methods
     
     public func configure(with launches: [Launch]) {
-        self.launches = launches
+        if launches.count == 0 {
+            noLaunchesLabel.isHidden = false
+            tableView.isHidden = true
+        } else {
+            self.launches = launches
+        }
     }
 }
 
@@ -97,6 +120,7 @@ extension LaunchesVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let date = Date(timeIntervalSince1970: launches[indexPath.row].date_unix!)
         dateFormatter.dateStyle = .long
         

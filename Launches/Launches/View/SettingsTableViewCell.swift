@@ -12,7 +12,9 @@ class SettingsTableViewCell: UITableViewCell {
     // MARK: - Properties
 
     static let identifier = "SettingsTableViewCell"
-
+    
+    var changedSegmentAction: (() -> ())?
+    
     private let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
@@ -65,20 +67,17 @@ class SettingsTableViewCell: UITableViewCell {
         ])
     }
     
-    public func configure(with text: String, items: [String]) {
+    public func configure(with text: String, items: [String], chosen: Int) {
         self.label.text = text
         self.segmentedControl.insertSegment(withTitle: items[0], at: 0, animated: false)
         self.segmentedControl.insertSegment(withTitle: items[1], at: 1, animated: false)
-        self.segmentedControl.selectedSegmentIndex = 0
+        self.segmentedControl.selectedSegmentIndex = chosen
     }
     
     // MARK: - Selectors
     
     @objc func changeUnit(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-                print(0)
-        }
-        else {print(1)}
+        changedSegmentAction?()
     }
 
 }

@@ -18,7 +18,7 @@ struct Rocket: Codable {
     var first_flight: String
     
     let country: String
-    let cost_per_launch: Double
+    let cost_per_launch: Int
     
     let first_stage: Stage
     let second_stage: Stage

@@ -7,9 +7,17 @@
 
 import UIKit
 
+struct Unit {
+    let title: String
+    let items: [String]
+    var chosenUnit: Int
+}
+
 class SettingsVC: UIViewController {
     
     // MARK: - Properties
+    
+    var units = [Unit]()
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -31,6 +39,28 @@ class SettingsVC: UIViewController {
         setupViews()
         setConstraints()
         setDelegate()
+        units = [
+            Unit(title: "Высота", items: LengthUnit.allCases.map { $0.description }, chosenUnit: settings.height.rawValue),
+            Unit(title: "Диаметр", items: LengthUnit.allCases.map { $0.description }, chosenUnit: settings.diameter.rawValue),
+            Unit(title: "Масса", items: MassUnit.allCases.map { $0.description }, chosenUnit: settings.mass.rawValue),
+            Unit(title: "Полезная нагрузка", items: MassUnit.allCases.map { $0.description }, chosenUnit: settings.payload.rawValue)
+        ]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        settings = UserSettings(height: LengthUnit(rawValue: units[0].chosenUnit)!,
+                                diameter: LengthUnit(rawValue: units[1].chosenUnit)!,
+                                mass: MassUnit(rawValue: units[2].chosenUnit)!,
+                                payload: MassUnit(rawValue: units[3].chosenUnit)!)
+        UserDefaultsManager.shared.setData(with: settings, for: UserDefaultsManager.settingsKey)
+//        NotificationCenter.default.post(name: .settingsChanged, object: nil)
     }
     
     // MARK: - Setup
@@ -67,12 +97,13 @@ class SettingsVC: UIViewController {
 // MARK: - Extensions
 
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         units.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        120
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,8 +111,12 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let index = units.index(units.startIndex, offsetBy: indexPath.row)
-//        cell.configure(with: units.keys[index], items: units.values[index])
+        cell.configure(with: units[indexPath.row].title, items: units[indexPath.row].items, chosen: units[indexPath.row].chosenUnit)
+        
+        cell.changedSegmentAction = { [unowned self] in
+            self.units[indexPath.row].chosenUnit = (units[indexPath.row].chosenUnit + 1) % 2
+            print(self.units[indexPath.row].chosenUnit)
+        }
         
         return cell
     }

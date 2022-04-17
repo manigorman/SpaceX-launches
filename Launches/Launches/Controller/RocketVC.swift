@@ -7,6 +7,12 @@
 
 import UIKit
 
+extension Double {
+    var clean: String {
+       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+    }
+}
+
 enum SectionType {
     case titleSection(model: TitleSection)
     case featuresSection(model: FeaturesSection)
@@ -107,37 +113,46 @@ class RocketVC: UIViewController {
     public func configure(with rocket: Rocket, and launches: [Launch]) {
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: rocket.first_flight)
         dateFormatter.dateStyle = .long
+        
+        let height = settings.height.rawValue == 0 ? "\(rocket.height.meters.clean)" : "\(rocket.height.feet.clean)"
+        let diameter = settings.diameter.rawValue == 0 ? "\(rocket.diameter.meters.clean)" : "\(rocket.diameter.feet.clean)"
+        let mass = settings.mass.rawValue == 0 ? "\(rocket.mass.kg.clean)" : "\(rocket.mass.lb.clean)"
+        let payload = settings.payload.rawValue == 0 ? "\(rocket.payload_weights[0].kg.clean)" : "\(rocket.payload_weights[0].lb.clean)"
         
         models = [
             .titleSection(model: TitleSection(titleLabel: rocket.name, icon: UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate), handler: {
                 return
             })),
-            .featuresSection(model: FeaturesSection(heightLabel: String(rocket.height.meters),
-                                                    diameterLabel: String(rocket.diameter.meters),
-                                                    massLabel: String(rocket.mass.kg),
-                                                    weightLabel: String(rocket.payload_weights[0].kg))),
+            .featuresSection(model: FeaturesSection(heightLabel: height,
+                                                    diameterLabel: diameter,
+                                                    massLabel: mass,
+                                                    weightLabel: payload)),
             .generalFeaturesSection(model: [
                 Feature(title: "Первый запуск", value: dateFormatter.string(from: date!)),
                 Feature(title: "Страна", value: rocket.country),
-                Feature(title: "Стоимость груза", value: String(rocket.cost_per_launch))
+                Feature(title: "Стоимость груза", value: "$\(rocket.cost_per_launch / 1000_000) млн")
             ]),
             .stageFeaturesSection(model: [
                 Feature(title: "Количество двигателей", value: String(rocket.first_stage.engines ?? 0)),
-                Feature(title: "Количество топлива", value: String(rocket.first_stage.fuel_amount_tons ?? 0)),
-                Feature(title: "Время сгорания", value: String(rocket.first_stage.burn_time_sec ?? 0))
+                Feature(title: "Количество топлива", value: "\((rocket.first_stage.fuel_amount_tons ?? 0).clean) т"),
+                Feature(title: "Время сгорания", value: "\(rocket.first_stage.burn_time_sec ?? 0) сек")
             ], header: "ПЕРВАЯ СТУПЕНЬ"),
             .stageFeaturesSection(model: [
                 Feature(title: "Количество двигателей", value: String(rocket.second_stage.engines ?? 0)),
-                Feature(title: "Количество топлива", value: String(rocket.second_stage.fuel_amount_tons ?? 0)),
-                Feature(title: "Время сгорания", value: String(rocket.first_stage.burn_time_sec ?? 0))
+                Feature(title: "Количество топлива", value: "\((rocket.second_stage.fuel_amount_tons ?? 0).clean) т"),
+                Feature(title: "Время сгорания", value: "\(rocket.second_stage.burn_time_sec ?? 0) сек")
             ], header: "ВТОРАЯ СТУПЕНЬ"),
             .seeLaunchesSection(title: rocket.name)
         ]
         self.launches = launches
     }
+    
+    // MARK: - Selectors
+    
 }
 
 // MARK: - Extensions

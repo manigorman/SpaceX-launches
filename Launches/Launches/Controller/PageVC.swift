@@ -10,6 +10,7 @@ import Network
 
 var allRockets: [Rocket] = []
 var allLaunches: [Launch] = []
+var settings = UserSettings(height: .m, diameter: .m, mass: .kg, payload: .kg)
 
 class PageVC: UIPageViewController {
     
@@ -49,6 +50,22 @@ class PageVC: UIPageViewController {
         setDelegate()
         
         NotificationCenter.default.addObserver(self, selector: #selector(showOfflineDeviceUI(_:)), name: NSNotification.Name.connectivityStatus, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(updateFeatures), name: NSNotification.Name.settingsChanged, object: nil)
+        
+        if !UserDefaultsManager.shared.isExist(for: UserDefaultsManager.settingsKey) {
+            UserDefaultsManager.shared.setData(with: settings, for: UserDefaultsManager.settingsKey)
+        } else {
+            UserDefaultsManager.shared.fetchData(with: UserDefaultsManager.settingsKey, completion: { result in
+                switch result {
+                case .success(let userSettings):
+                    settings = userSettings
+                    print(settings)
+                case .failure(let error):
+                    print(error)
+                }
+            })
+        }
         
         if NetworkMonitor.shared.isConnected {
             print("connected")
@@ -96,6 +113,11 @@ class PageVC: UIPageViewController {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: false, completion: nil)
     }
     
+//    @objc private func updateFeatures() {
+//        DispatchQueue.main.async {
+//        }
+//    }
+    
     // MARK: - Methods
     
     private func fetchRocket() {
@@ -103,9 +125,9 @@ class PageVC: UIPageViewController {
             switch result {
             case .success(let rockets):
                 allRockets = rockets
-//                DispatchQueue.main.async {
-//                    self?.configurePages()
-//                }
+                //                DispatchQueue.main.async {
+                //                    self?.configurePages()
+                //                }
             case .failure(let error):
                 print(error)
             }

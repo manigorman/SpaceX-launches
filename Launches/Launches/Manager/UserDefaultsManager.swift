@@ -18,7 +18,11 @@ extension UserDefaults {
 final class UserDefaultsManager {
     
     static let shared = UserDefaultsManager()
-    private static let userDefaults = UserDefaults.standard
+    static let settingsKey = "Settings"
+    
+    public func isExist(for key: String) -> Bool {
+        UserDefaults.standard.data(forKey: key) != nil
+    }
 
     public func setData(with data: UserSettings, for key: String) -> Void {
         do {
@@ -38,13 +42,15 @@ final class UserDefaultsManager {
             do {
                 let decoder = JSONDecoder()
                 
-                let result = try decoder.decode(UserSettings.self, from: data)
+                let results = try decoder.decode(UserSettings.self, from: data)
                 
-                completion(.success(result))
+                completion(.success(results))
                 
             } catch {
-                print("Unable to Decode Data (\(error))")
+                completion(.failure(error))
             }
+        } else {
+            print("Doesn't exist")
         }
     }
     
