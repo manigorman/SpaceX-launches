@@ -229,7 +229,7 @@ extension RocketVC: UITableViewDelegate, UITableViewDataSource {
                         sheet.detents = [.medium(), .large()]
                     }
                 } else {
-                    // Fallback on earlier versions
+                    print("====")
                 }
                 self.present(nav, animated: true, completion: nil)
             }
